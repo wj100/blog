@@ -1,35 +1,553 @@
-extends partial/layout
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
 
-include mixins
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-block site_title
-    != page.title + " · " + config.title
+<link rel="stylesheet" href="/css/main.css">
 
-block description
-    - var desc = page.desc || strip_html(page.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, 150);
-    meta(name="description", content=desc)
 
-block content
-  .autopagerize_page_element: .content: .post-page
-    include mixins
-    +make_post(page, true)
-    .share
-      .evernote
-        a.fa.fa-bookmark(href="",onclick="javascript:join_favorite()", ref="sidebar")
-      .weibo
-        a.fa.fa-weibo(href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&title=',e(d.title),'&appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));")
-      .twitter
-        - var twitter_text = encodeURI(__('Share_text') + "\n\n" + config.title+" · "+page.title+"\n"+config.url+"/"+page.path+"\n")
-        a.fa.fa-twitter(href=url_for("http://twitter.com/intent/tweet?text="+ twitter_text))
-    - var prev = page.prev ? page.prev.path : false;
-    - var next = page.next ? page.next.path : false;
-    .pagination
-      ul.clearfix
-        if prev
-          li.pre.pagbuttons
-            a.btn(role="navigation",href=url_for(prev), title=page.prev.title)!= __('prev_post')
-        if next
-          li.next.pagbuttons
-            a.btn(role="navigation",href=url_for(next), title=page.next.title)!= __('next_post')
-    if page.comments
-        include partial/comments
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&lt;!DOCTYPE html&gt; &lt;html lang&#x3D;&quot;en&quot;&gt; &lt;head&gt;     &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;     &lt;title&gt;柱形图拖拽&lt;&#x2F;title&gt;     &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.staticfile.org&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="echarts可拖拽柱形图">
+<meta property="og:url" content="http://example.com/2023/01/11/echarts%E5%8F%AF%E6%8B%96%E6%8B%BD%E6%9F%B1%E5%BD%A2%E5%9B%BE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&lt;!DOCTYPE html&gt; &lt;html lang&#x3D;&quot;en&quot;&gt; &lt;head&gt;     &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;     &lt;title&gt;柱形图拖拽&lt;&#x2F;title&gt;     &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.staticfile.org&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-11T05:59:04.565Z">
+<meta property="article:modified_time" content="2023-01-11T05:59:04.565Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/01/11/echarts%E5%8F%AF%E6%8B%96%E6%8B%BD%E6%9F%B1%E5%BD%A2%E5%9B%BE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/01/11/echarts%E5%8F%AF%E6%8B%96%E6%8B%BD%E6%9F%B1%E5%BD%A2%E5%9B%BE/","path":"2023/01/11/echarts可拖拽柱形图/","title":"echarts可拖拽柱形图"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>echarts可拖拽柱形图 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/echarts%E5%8F%AF%E6%8B%96%E6%8B%BD%E6%9F%B1%E5%BD%A2%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="echarts可拖拽柱形图 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          echarts可拖拽柱形图
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:59:04" itemprop="dateCreated datePublished" datetime="2023-01-11T13:59:04+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;柱形图拖拽&lt;/title&gt;
+    &lt;script src=&quot;https://cdn.staticfile.org/vue/2.2.2/vue.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;http://echarts.baidu.com/examples/vendors/echarts/echarts.min.js?_v_=1526486305040&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;app&quot;&gt;
+    &lt;div id=&quot;chartTest&quot;  style=&quot;width: 600px;height: 400px;&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    var vm = new Vue(&#123;
+        el: &quot;#app&quot;,
+        data () &#123;
+            return &#123;
+                xAxisData: [&#39;一&#39;,&#39;二&#39;,&#39;三&#39;],
+                //柱形数据数组
+                seriesDataMain: [1700, 1200, 300],
+                //这里辅助柱形数据数组,相同length的0
+                seriesDataFz: [0, 0, 0],
+                lineMax: [],
+                lineMin: [],
+                lineDataAll: [],
+            &#125;;
+        &#125;,
+        methods: &#123;
+            chartTest () &#123;
+                let dom = document.getElementById(&#39;chartTest&#39;);
+                let myChart = echarts.init(dom);
+                let yAxisData = this.lineMax;
+                let lineMin = this.lineMin;
+                let lineDataAll = this.lineDataAll;
+                this.chartAction(myChart, yAxisData, lineMin, lineDataAll);
+            &#125;,
+            chartAction (myChart, yAxisData, lineMin, lineDataAll) &#123;
+                let option = &#123;
+                    tooltip: &#123;
+                        triggerOn: &#39;none&#39;,
+                        formatter: function(params) &#123;
+                            return &#39;X: &#39; + params.name + &#39;&lt;br&gt;Y最大: &#39; + parseInt(params.data);
+                        &#125;
+                    &#125;,
+                    grid: &#123;
+                        left: &#39;3%&#39;,
+                        right: &#39;4%&#39;,
+                        bottom: &#39;3%&#39;,
+                        containLabel: true
+                    &#125;,
+                    xAxis: &#123;
+                        type: &#39;category&#39;,
+                        data: this.xAxisData
+                    &#125;,
+                    yAxis: &#123;
+                        type: &#39;value&#39;,
+                        max:3000,
+                        min:0,
+                        splitLine: &#123;
+                            lineStyle: &#123;
+                                color: &#39;#DBDBDB&#39;,
+                                type: &#39;dashed&#39;
+                            &#125;
+                        &#125;,
+                        axisLine: &#123;
+                            show: true
+                        &#125;,
+                        axisTick: &#123;
+                            show: false
+                        &#125;
+                    &#125;,
+                    series: [
+                        &#123;
+                            id: &#39;line1&#39;,
+                            type: &#39;line&#39;,
+                            color: &#39;#188df0&#39;,
+                            smooth: true,
+                            symbol: &#39;emptyCircle&#39;,
+                            symbolSize: 10,
+                            data: yAxisData,
+                            lineStyle: &#123;
+                                color: &quot;transparent&quot;
+                            &#125;
+                        &#125;,
+                        &#123;
+                            id: &#39;line2&#39;,
+                            type: &#39;line&#39;,
+                            color: &#39;transparent&#39;,
+                            itemStyle:&#123;
+                                opacity:0
+                            &#125;,
+                            smooth: true,
+                            symbol: &#39;emptyCircle&#39;,
+                            symbolSize: 10,
+                            data: lineMin,
+                            lineStyle: &#123;
+                                color: &quot;transparent&quot;
+                            &#125;
+                        &#125;,
+                        &#123;
+                            id: &quot;barMain&quot;,
+                            name: &#39;主要&#39;,
+                            type: &#39;bar&#39;,
+                            stack: &#39;总量&#39;,
+                            label: &#123;
+                                normal: &#123;
+                                    show: true,
+                                    position: &#39;inside&#39;
+                                &#125;
+                            &#125;,
+                            data: this.seriesDataMain,
+                            itemStyle: &#123;
+                                normal: &#123;
+                                    color: new echarts.graphic.LinearGradient(
+                                        0, 0, 0, 1,
+                                        [
+                                            &#123;offset: 0, color: &#39;#83bff6&#39;&#125;,
+                                            &#123;offset: 0.5, color: &#39;#188df0&#39;&#125;,
+                                            &#123;offset: 1, color: &#39;#188df0&#39;&#125;
+                                        ]
+                                    )
+                                &#125;,
+                                emphasis: &#123;
+                                    color: new echarts.graphic.LinearGradient(
+                                        0, 0, 0, 1,
+                                        [
+                                            &#123;offset: 0, color: &#39;#2378f7&#39;&#125;,
+                                            &#123;offset: 0.7, color: &#39;#2378f7&#39;&#125;,
+                                            &#123;offset: 1, color: &#39;#83bff6&#39;&#125;
+                                        ]
+                                    )
+                                &#125;
+                            &#125;,
+                            barWidth: 20,
+                        &#125;,
+                    ]
+                &#125;;
+                myChart.setOption(option);
+                // 拖拽
+                setTimeout(function() &#123;
+                    myChart.setOption(&#123;
+                        graphic: echarts.util.map(lineDataAll, function(item, dataIndex) &#123;
+                            let position = myChart.convertToPixel(&#39;grid&#39;, item);
+                            return &#123;
+                                id: dataIndex,
+                                type: &#39;circle&#39;,
+                                position: position,
+                                shape: &#123;
+                                    r: 5
+                                &#125;,
+                                invisible: true,
+                                draggable: true,
+                                ondrag: echarts.util.curry(onPointDragging, dataIndex),
+                                onmousemove: echarts.util.curry(showTooltip, dataIndex),
+                                onmouseout: echarts.util.curry(hideTooltip, dataIndex),
+                                ondragend: echarts.util.curry(onPointDragEnd, dataIndex),
+                                z: 100
+                            &#125;;
+                        &#125;)
+                    &#125;);
+                &#125;, 0);
+                window.addEventListener(&#39;resize&#39;, updatePosition);
+                let that = this;
+                function updatePosition() &#123;
+                    myChart.setOption(&#123;
+                        graphic: echarts.util.map(lineDataAll, function(item, dataIndex) &#123;
+                            return &#123;
+                                position: myChart.convertToPixel(&#39;grid&#39;, item)
+                            &#125;;
+                        &#125;)
+                    &#125;);
+                &#125;
+
+                function showTooltip(dataIndex) &#123;
+                    if (dataIndex &lt; that.lineDataAll.length/2) &#123;
+                        myChart.dispatchAction(&#123;
+                            type: &#39;showTip&#39;,
+                            seriesIndex: 0,
+                            dataIndex: dataIndex
+                        &#125;);
+                    &#125; else &#123;
+                        let index = dataIndex - that.lineDataAll.length/2;
+                        myChart.dispatchAction(&#123;
+                            type: &#39;showTip&#39;,
+                            seriesIndex: 0,
+                            dataIndex: index
+                        &#125;);
+                    &#125;
+
+                &#125;
+
+                function hideTooltip(dataIndex) &#123;
+                    myChart.dispatchAction(&#123;
+                        type: &#39;hideTip&#39;
+                    &#125;);
+                &#125;
+
+                function onPointDragging(dataIndex, dx, dy) &#123;
+                    if (dataIndex &lt; lineDataAll.length/2) &#123;
+                        /*最高点值不能小于最低点的值*/
+                        if (myChart.convertFromPixel(&#39;grid&#39;, this.position)[1]-that.seriesDataFz[dataIndex]&gt;=0) &#123;
+                            lineDataAll[dataIndex][1] = myChart.convertFromPixel(&#39;grid&#39;, this.position)[1];
+                            yAxisData = [];
+                            for (let i=0;i&lt;(lineDataAll.length)/2;i++) &#123;
+                                yAxisData.push(lineDataAll[i][1]);
+                            &#125;
+                            console.log(yAxisData);
+                            myChart.setOption(&#123;
+                                series: [&#123;
+                                    id: &#39;line1&#39;,
+                                    data: yAxisData
+                                &#125;,&#123;
+                                    id: &#39;line2&#39;,
+                                    data: lineMin
+                                &#125;]
+                            &#125;);
+                        &#125;
+                    &#125;
+                &#125;
+
+                function onPointDragEnd(dataIndex, dx, dy) &#123;
+                    myChart.setOption(&#123;
+                        graphic: echarts.util.map(lineDataAll, function(item, dataIndex) &#123;
+                            return &#123;
+                                id: dataIndex,
+                                position: myChart.convertToPixel(&#39;grid&#39;, [dataIndex, item])
+                            &#125;
+                        &#125;)
+                    &#125;);
+                    that.seriesDataFz = lineMin;
+                    for (let i in yAxisData) &#123;
+                        for (let j in that.seriesDataFz) &#123;
+                            if (i==j) &#123;
+                                that.seriesDataMain[i] = parseInt(yAxisData[i]) - parseInt(that.seriesDataFz[i]);
+                            &#125;
+                        &#125;
+                    &#125;
+                    that.chartAction(myChart, yAxisData, lineMin, lineDataAll);
+
+                &#125;
+
+                myChart.on(&#39;click&#39;, function (params) &#123;
+                    that.inputValue = params.value;
+                &#125;);
+            &#125;
+        &#125;,
+        mounted ()&#123;
+            for (let i in this.seriesDataFz) &#123;
+                this.lineMax.push(this.seriesDataFz[i]+this.seriesDataMain[i]);
+            &#125;
+            console.log(this.lineMax);
+            this.lineMin = this.seriesDataFz;
+            // this.initChart();
+
+            this.lineDataAll= [];
+            for (let i in this.xAxisData) &#123;
+                for (let j in this.lineMax) &#123;
+                    if (i==j) &#123;
+                        this.lineDataAll[i]=[this.xAxisData[i], this.lineMax[j]];
+                    &#125;
+                &#125;
+            &#125;
+            for (let i in this.xAxisData) &#123;
+                for (let j in this.lineMin) &#123;
+                    if (i==j) &#123;
+                        let index = parseInt(i)+ parseInt(this.xAxisData.length);
+                        this.lineDataAll[index]=[this.xAxisData[i], this.lineMin[j]];
+                    &#125;
+                &#125;
+            &#125;
+            console.log(this.lineDataAll);
+            this.chartTest();
+        &#125;
+    &#125;);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/11/nginx%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%8F%8A%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F/" rel="prev" title="nginx基础使用及代理跨域">
+                  <i class="fa fa-chevron-left"></i> nginx基础使用及代理跨域
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/11/mac%E7%94%B5%E8%84%91git%20clone%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90/" rel="next" title="mac电脑git clone提示没有权限">
+                  mac电脑git clone提示没有权限 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

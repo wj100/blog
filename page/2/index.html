@@ -1,9 +1,1079 @@
-extends partial/layout
-block content
-    .autopagerize_page_element: .content
-        - page.posts.each(function (item) {
-            include mixins
-            +make_post(item, false)
-        - })
-        include mixins
-        +make_pager(__('prev'), __('next'))
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"page/2/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/vue%E5%AE%9E%E7%8E%B0%E9%80%89%E4%B8%ADli%E5%8F%98%E8%89%B2--%E5%B0%8F%E6%8A%80%E5%B7%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/vue%E5%AE%9E%E7%8E%B0%E9%80%89%E4%B8%ADli%E5%8F%98%E8%89%B2--%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="post-title-link" itemprop="url">vue实现选中li变色--小技巧</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:58" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:58+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>在methods中写入一个方法</strong></p>
+<pre><code>clickcategory(index)&#123; // 这里我们传入一个当前值
+　　this.categoryIndex = index
+&#125;
+</code></pre>
+<p><strong>然后需要在data里面注册一下</strong></p>
+<pre><code>data() &#123;
+   return &#123;
+    categoryIndex: 0, //点击当前背景变成白色索引
+               &#125;
+  &#125;,
+</code></pre>
+<p><strong>在css中设置我们当前选中项为active的类名，并给与一个白色的背景颜色</strong></p>
+<pre><code>.active &#123;
+ background: #fff
+&#125;
+</code></pre>
+<p><strong>接下来在html中绑定</strong></p>
+<pre><code>&lt;li @click=&quot;clickCategory(index)&quot; :class=&quot;&#123;active:categoryIndex==index&#125;&quot;&gt; &lt;!-- 选中当前动态绑定class --&gt;
+ 
+&lt;/li&gt;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/ffmpeg%E8%BD%AC%E5%8C%96%E8%A7%86%E9%A2%91%E6%A0%BC%E5%BC%8F%20%E5%8E%BB%E6%B0%B4%E5%8D%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/ffmpeg%E8%BD%AC%E5%8C%96%E8%A7%86%E9%A2%91%E6%A0%BC%E5%BC%8F%20%E5%8E%BB%E6%B0%B4%E5%8D%B0/" class="post-title-link" itemprop="url">ffmpeg转化视频格式 去水印</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:57" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:57+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>转化格式<br>ffmpeg -i xxx.flv -b:v 640k xxx.mp4<br>去水印 参数代表坐标与尺寸<br>ffmpeg -i “E:\迅雷下载\047.mp4” -vf “delogo&#x3D;x&#x3D;9:y&#x3D;293:w&#x3D;136:h&#x3D;94” -c:a copy<br>“47.mp4”<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34777982/article/details/124038072">https://blog.csdn.net/qq_34777982/article/details/124038072</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/%E5%90%84%E5%B9%B3%E5%8F%B0ua/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/%E5%90%84%E5%B9%B3%E5%8F%B0ua/" class="post-title-link" itemprop="url">各平台ua</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:56" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:56+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="个人微信"><a href="#个人微信" class="headerlink" title="个人微信"></a>个人微信</h3><p>MicroMessenger</p>
+<h3 id="企业微信"><a href="#企业微信" class="headerlink" title="企业微信"></a>企业微信</h3><p>wxwork</p>
+<h3 id="QQ"><a href="#QQ" class="headerlink" title="QQ"></a>QQ</h3><p>MQQBrowser</p>
+<h3 id="钉钉"><a href="#钉钉" class="headerlink" title="钉钉"></a>钉钉</h3><p>DingTalk</p>
+<h3 id="支付宝"><a href="#支付宝" class="headerlink" title="支付宝"></a>支付宝</h3><p>AlipayClient</p>
+<h3 id="飞书"><a href="#飞书" class="headerlink" title="飞书"></a>飞书</h3><p>lark</p>
+<p>可以使用小写<br>ua &#x3D; navigator.userAgent.toLowerCase();</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/win10%E5%BC%80%E5%90%AFssh-agent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/win10%E5%BC%80%E5%90%AFssh-agent/" class="post-title-link" itemprop="url">win10开启ssh-agent</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:55" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:55+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>右键“我的电脑”（Windows 10上为“此电脑”），选择“管理”菜单项，打开计算机管理窗口。</p>
+<ol>
+<li>左栏选择服务；</li>
+<li>右栏中找到OpenSSH Authentication Agent服务；</li>
+<li>双击打开设置界面，将启动类型由禁用改为自动；</li>
+<li>点击应用，这时才可以手动启动和停止agent服务；</li>
+<li>点击启动按钮，启动agent服务。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BC%81%E4%B8%9A%E9%82%AE%E5%AE%98%E7%BD%91SEO%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BC%81%E4%B8%9A%E9%82%AE%E5%AE%98%E7%BD%91SEO%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">记一次企业邮官网SEO优化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:54" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:54+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><p>百度搜索 <em>网易企业邮箱</em> 会出现m.qiye.163.com 排名在前的问题</p>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><ol>
+<li><p>在pc和m站分别加入 、mobile<br>applicable-device标注可以帮助百度识别网站是PC站还是M站，给百度提交提交校验识别结果的正确性，减少百度蜘蛛把PC站当成M站，或者把M站当成PC站进行抓取。</p>
+</li>
+<li><p>在百度站长平台做移动适配 <img src="https://img-blog.csdnimg.cn/028e4cdff00b4b0bba88bb60d68737f7.png" alt="在这里插入图片描述"></p>
+</li>
+<li><p>js代码在pc和m站分别判断ua，跳转正确网页</p>
+</li>
+</ol>
+<pre><code>if(is_pc)&#123;
+    window.location.href = &#39;https://qiye.163.com&#39; + window.location.search;
+&#125;
+</code></pre>
+<p>推测出现此问题的原因是 我们只在pc站做了3的跳转逻辑 有可能被百度知道了<br>所以导致pc搜关键词直接出移动站</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%95%B0%E7%BB%84%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%95%B0%E7%BB%84%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%A0%91/" class="post-title-link" itemprop="url">【算法】数组转化为树</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:54" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:54+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><pre><code>let arr = [
+    &#123;id: 1, name: &#39;部门1&#39;, pid: 0&#125;,
+    &#123;id: 2, name: &#39;部门2&#39;, pid: 1&#125;,
+    &#123;id: 3, name: &#39;部门3&#39;, pid: 1&#125;,
+    &#123;id: 4, name: &#39;部门4&#39;, pid: 3&#125;,
+    &#123;id: 5, name: &#39;部门5&#39;, pid: 4&#125;,
+]
+/**
+ * 递归查找，获取children
+ */
+const getChildren = (data, result, pid) =&gt; &#123;
+  for (const item of data) &#123;
+    if (item.pid === pid) &#123;
+      const newItem = &#123;...item, children: []&#125;;
+      result.push(newItem);
+      getChildren(data, newItem.children, item.id);
+    &#125;
+  &#125;
+&#125;
+
+/**
+* 转换方法
+*/
+const arrayToTree = (data, pid) =&gt; &#123;
+  const result = [];
+  getChildren(data, result, pid)
+  return result;
+&#125;
+
+arrayToTree (arr,0)
+</code></pre>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><pre><code>&lt;script&gt;
+let arr = [
+    &#123;id: 1, name: &#39;部门1&#39;, pid: 0&#125;,
+    &#123;id: 2, name: &#39;部门2&#39;, pid: 1&#125;,
+    &#123;id: 3, name: &#39;部门3&#39;, pid: 1&#125;,
+    &#123;id: 4, name: &#39;部门4&#39;, pid: 3&#125;,
+    &#123;id: 5, name: &#39;部门5&#39;, pid: 4&#125;,
+]
+function arrayToTree(items) &#123;
+    const result = [];   // 存放结果集
+    const itemMap = &#123;&#125;;  // 
+    // 先转成map存储
+    for (const item of items) &#123;
+      itemMap[item.id] = &#123;...item, children: []&#125;
+    &#125;
+    for (const item of items) &#123;
+      if (item.pid === 0) &#123;
+        result.push(itemMap[item.id]);
+      &#125; else &#123;
+        itemMap[item.pid].children.push(itemMap[item.id])
+        console.log(item.pid)
+      &#125;
+  
+    &#125;
+    return result;
+  &#125;
+
+  console.log(JSON.stringify(arrayToTree(arr)))
+&lt;/script&gt;
+</code></pre>
+<h3 id="最优"><a href="#最优" class="headerlink" title="最优"></a>最优</h3><pre><code>function arrayToTree(items) &#123;
+  const result = [];   // 存放结果集
+  const itemMap = &#123;&#125;;  // 
+  for (const item of items) &#123;
+    const id = item.id;
+    const pid = item.pid;
+
+    if (!itemMap[id]) &#123;
+      itemMap[id] = &#123;
+        children: [],
+      &#125;
+    &#125;
+
+    itemMap[id] = &#123;
+      ...item,
+      children: itemMap[id][&#39;children&#39;]
+    &#125;
+
+    const treeItem =  itemMap[id];
+
+    if (pid === 0) &#123;
+      result.push(treeItem);
+    &#125; else &#123;
+      if (!itemMap[pid]) &#123;
+        itemMap[pid] = &#123;
+          children: [],
+        &#125;
+      &#125;
+      itemMap[pid].children.push(treeItem)
+    &#125;
+
+  &#125;
+  return result;
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">mac开发环境搭建</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:53" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:53+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><p>安装git<br><code>https://git-scm.com/</code></p>
+</li>
+<li><p>安装brew包管理工具</p>
+<p>&#x2F;bin&#x2F;zsh -c “$(curl -fsSL <a target="_blank" rel="noopener" href="https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh">https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh</a>)”</p>
+</li>
+<li><p>安装git node nginx。都可以用brew install xxx</p>
+</li>
+<li><p>打造终端</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/37195261">https://zhuanlan.zhihu.com/p/37195261</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/webpack%E5%B8%B8%E7%94%A8loader%E5%92%8Cplugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/webpack%E5%B8%B8%E7%94%A8loader%E5%92%8Cplugin/" class="post-title-link" itemprop="url">webpack常用loader和plugin</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:52" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:52+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li>url-loader 将图片转化为base64 （url-loader包含file-loader）</li>
+<li>file-loader 将url-loader不能转化的copy出来</li>
+<li>css-loader 解析js中 import的css文件</li>
+<li>style-loader 将css-loader解析的css生成style标签</li>
+<li>html-loader 检测html文件中的标签如 img ，再使用url-loader处理 保证路径正确</li>
+<li>mini-css-extract-plugin 将css-loader生成的css 放入单独的css文件 再结合html-webpack-plugin 通过link方式引入样式</li>
+<li>html-webpack-plugin 创建一个html 文件，并把webpack 打包后的静态文件自动插入到这个html 文件当中</li>
+<li></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/code%20ELIFECYCLE%E6%8A%A5%E9%94%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/code%20ELIFECYCLE%E6%8A%A5%E9%94%99/" class="post-title-link" itemprop="url">code ELIFECYCLE报错</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:51" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:51+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>网上搜到的办法都是删除node_modules<br>但是并没有用<br>原来是正则表达式的问题<br>用 new RegExp 的方式去创建即可<br>将</p>
+<pre><code>reg=/(?&lt;=(sem\/p|sem\/m)).*?(?=\.)/g
+</code></pre>
+<p>改为</p>
+<pre><code>reg=new RegExp(&quot;/(?&lt;=(sem\/p|sem\/m)).*?(?=\\.)/g&quot;)
+</code></pre>
+<p>注意.前面加了个\</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/nginx%E9%85%8D%E5%90%88%E5%89%8D%E7%AB%AF%E5%AE%9E%E7%8E%B0%E7%BD%91%E7%AB%99%E5%88%86%E6%B5%81%20ABtest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/11/nginx%E9%85%8D%E5%90%88%E5%89%8D%E7%AB%AF%E5%AE%9E%E7%8E%B0%E7%BD%91%E7%AB%99%E5%88%86%E6%B5%81%20ABtest/" class="post-title-link" itemprop="url">nginx配合前端实现网站分流 ABtest</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:50" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:50+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>前端随机生成0-99的cookie，通过nginx分配10%的流量<br>nginx配置<br><img src="https://img-blog.csdnimg.cn/de62aee968d54dc1825d0be854c89cbe.png" alt="在这里插入图片描述"></p>
+<p>前端生成cookie</p>
+<pre><code>  (function()&#123;
+                function random(min, max) &#123;
+                     return Math.floor(Math.random() * (max - min)) + min;
+                     &#125;
+                function setCookie(name, value, days) &#123; // 设置cookie days设置过期时间 单位:天 不传默认是 cookie 在浏览器关闭时删除
+                    var exp = new Date();
+                    days = days || 30;
+                    exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
+                    document.cookie = name + &quot;=&quot; + escape(value) + &quot;;expires=&quot; + exp.toGMTString() + &#39;;path=/&#39;;
+                &#125;
+                function getCookie(name) &#123; // 获取一个cookie  
+                    var strCookie = document.cookie;
+                    var arr = strCookie.split(&#39;;&#39;);
+                    for (var i = 0; i &lt; arr.length; i++) &#123;
+                        var t = arr[i].split(&quot;=&quot;);
+                        if (t[0].trim() == name) &#123;
+                            return t[1];
+                        &#125;
+                    &#125;;
+                    return null;
+                &#125;
+                if(!getCookie(&#39;pagetest&#39;))&#123;
+                    // alert(1)
+                    setCookie(&#39;pagetest&#39;,random(0,99))
+                    location.reload();
+                &#125;
+            &#125;)()
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

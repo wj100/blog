@@ -1,35 +1,293 @@
-extends partial/layout
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
 
-include mixins
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-block site_title
-    != page.title + " · " + config.title
+<link rel="stylesheet" href="/css/main.css">
 
-block description
-    - var desc = page.desc || strip_html(page.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, 150);
-    meta(name="description", content=desc)
 
-block content
-  .autopagerize_page_element: .content: .post-page
-    include mixins
-    +make_post(page, true)
-    .share
-      .evernote
-        a.fa.fa-bookmark(href="",onclick="javascript:join_favorite()", ref="sidebar")
-      .weibo
-        a.fa.fa-weibo(href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&title=',e(d.title),'&appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));")
-      .twitter
-        - var twitter_text = encodeURI(__('Share_text') + "\n\n" + config.title+" · "+page.title+"\n"+config.url+"/"+page.path+"\n")
-        a.fa.fa-twitter(href=url_for("http://twitter.com/intent/tweet?text="+ twitter_text))
-    - var prev = page.prev ? page.prev.path : false;
-    - var next = page.next ? page.next.path : false;
-    .pagination
-      ul.clearfix
-        if prev
-          li.pre.pagbuttons
-            a.btn(role="navigation",href=url_for(prev), title=page.prev.title)!= __('prev_post')
-        if next
-          li.next.pagbuttons
-            a.btn(role="navigation",href=url_for(next), title=page.next.title)!= __('next_post')
-    if page.comments
-        include partial/comments
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="查看 brew.git 当前源$ cd “$(brew –repo)” &amp;&amp; git remote -vorigin https:&#x2F;&#x2F;github.com&#x2F;Homebrew&#x2F;brew.git (fetch)origin https:&#x2F;&#x2F;github.com&#x2F;Homebrew&#x2F;brew.git (push) 查看 homebrew-core.git 当前源$ cd “$(brew –">
+<meta property="og:type" content="article">
+<meta property="og:title" content="brew换源">
+<meta property="og:url" content="http://example.com/2023/01/11/brew%E6%8D%A2%E6%BA%90/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="查看 brew.git 当前源$ cd “$(brew –repo)” &amp;&amp; git remote -vorigin https:&#x2F;&#x2F;github.com&#x2F;Homebrew&#x2F;brew.git (fetch)origin https:&#x2F;&#x2F;github.com&#x2F;Homebrew&#x2F;brew.git (push) 查看 homebrew-core.git 当前源$ cd “$(brew –">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-11T05:58:43.880Z">
+<meta property="article:modified_time" content="2023-01-11T05:58:43.880Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/01/11/brew%E6%8D%A2%E6%BA%90/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/01/11/brew%E6%8D%A2%E6%BA%90/","path":"2023/01/11/brew换源/","title":"brew换源"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>brew换源 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-brew-git-%E5%BD%93%E5%89%8D%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">查看 brew.git 当前源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-homebrew-core-git-%E5%BD%93%E5%89%8D%E6%BA%90"><span class="nav-number">2.</span> <span class="nav-text">查看 homebrew-core.git 当前源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-brew-git-%E4%B8%BA%E9%98%BF%E9%87%8C%E6%BA%90"><span class="nav-number">3.</span> <span class="nav-text">修改 brew.git 为阿里源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-homebrew-core-git-%E4%B8%BA%E9%98%BF%E9%87%8C%E6%BA%90"><span class="nav-number">4.</span> <span class="nav-text">修改 homebrew-core.git 为阿里源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zsh-%E6%9B%BF%E6%8D%A2-brew-bintray-%E9%95%9C%E5%83%8F"><span class="nav-number">5.</span> <span class="nav-text">zsh 替换 brew bintray 镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bash-%E6%9B%BF%E6%8D%A2-brew-bintray-%E9%95%9C%E5%83%8F"><span class="nav-number">6.</span> <span class="nav-text">bash 替换 brew bintray 镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%B7%E6%96%B0%E6%BA%90"><span class="nav-number">7.</span> <span class="nav-text">刷新源</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/brew%E6%8D%A2%E6%BA%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="brew换源 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          brew换源
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:43" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:43+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="查看-brew-git-当前源"><a href="#查看-brew-git-当前源" class="headerlink" title="查看 brew.git 当前源"></a>查看 brew.git 当前源</h1><p>$ cd “$(brew –repo)” &amp;&amp; git remote -v<br>origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/brew.git">https://github.com/Homebrew/brew.git</a> (fetch)<br>origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/brew.git">https://github.com/Homebrew/brew.git</a> (push)</p>
+<h1 id="查看-homebrew-core-git-当前源"><a href="#查看-homebrew-core-git-当前源" class="headerlink" title="查看 homebrew-core.git 当前源"></a>查看 homebrew-core.git 当前源</h1><p>$ cd “$(brew –repo homebrew&#x2F;core)” &amp;&amp; git remote -v<br>origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/homebrew-core.git">https://github.com/Homebrew/homebrew-core.git</a> (fetch)<br>origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/homebrew-core.git">https://github.com/Homebrew/homebrew-core.git</a> (push)</p>
+<h1 id="修改-brew-git-为阿里源"><a href="#修改-brew-git-为阿里源" class="headerlink" title="修改 brew.git 为阿里源"></a>修改 brew.git 为阿里源</h1><p>$ git -C “$(brew –repo)” remote set-url origin<br><a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/homebrew/brew.git">https://mirrors.aliyun.com/homebrew/brew.git</a></p>
+<h1 id="修改-homebrew-core-git-为阿里源"><a href="#修改-homebrew-core-git-为阿里源" class="headerlink" title="修改 homebrew-core.git 为阿里源"></a>修改 homebrew-core.git 为阿里源</h1><p>$ git -C “$(brew –repo homebrew&#x2F;core)” remote set-url origin<br><a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/homebrew/homebrew-core.git">https://mirrors.aliyun.com/homebrew/homebrew-core.git</a></p>
+<h1 id="zsh-替换-brew-bintray-镜像"><a href="#zsh-替换-brew-bintray-镜像" class="headerlink" title="zsh 替换 brew bintray 镜像"></a>zsh 替换 brew bintray 镜像</h1><p>$ echo ‘export<br>HOMEBREW_BOTTLE_DOMAIN&#x3D;<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/homebrew/homebrew-bottles%E2%80%99">https://mirrors.aliyun.com/homebrew/homebrew-bottles’</a></p>
+<blockquote>
+<blockquote>
+<p>~&#x2F;.zshrc<br>$ source ~&#x2F;.zshrc</p>
+</blockquote>
+</blockquote>
+<h1 id="bash-替换-brew-bintray-镜像"><a href="#bash-替换-brew-bintray-镜像" class="headerlink" title="bash 替换 brew bintray 镜像"></a>bash 替换 brew bintray 镜像</h1><p>$ echo ‘export<br>HOMEBREW_BOTTLE_DOMAIN&#x3D;<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/homebrew/homebrew-bottles%E2%80%99">https://mirrors.aliyun.com/homebrew/homebrew-bottles’</a></p>
+<blockquote>
+<blockquote>
+<p>~&#x2F;.bash_profile<br>$ source ~&#x2F;.bash_profile</p>
+</blockquote>
+</blockquote>
+<h1 id="刷新源"><a href="#刷新源" class="headerlink" title="刷新源"></a>刷新源</h1><p>$ brew update</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/11/craco%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/" rel="prev" title="craco打包优化">
+                  <i class="fa fa-chevron-left"></i> craco打包优化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/11/textarea%E5%A4%9A%E8%A1%8C%E9%82%AE%E7%AE%B1%E6%A0%BC%E5%BC%8F%E6%A0%A1%E9%AA%8C/" rel="next" title="textarea多行邮箱格式校验">
+                  textarea多行邮箱格式校验 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

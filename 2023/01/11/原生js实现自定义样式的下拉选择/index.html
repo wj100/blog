@@ -1,35 +1,439 @@
-extends partial/layout
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
 
-include mixins
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-block site_title
-    != page.title + " · " + config.title
+<link rel="stylesheet" href="/css/main.css">
 
-block description
-    - var desc = page.desc || strip_html(page.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, 150);
-    meta(name="description", content=desc)
 
-block content
-  .autopagerize_page_element: .content: .post-page
-    include mixins
-    +make_post(page, true)
-    .share
-      .evernote
-        a.fa.fa-bookmark(href="",onclick="javascript:join_favorite()", ref="sidebar")
-      .weibo
-        a.fa.fa-weibo(href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&title=',e(d.title),'&appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));")
-      .twitter
-        - var twitter_text = encodeURI(__('Share_text') + "\n\n" + config.title+" · "+page.title+"\n"+config.url+"/"+page.path+"\n")
-        a.fa.fa-twitter(href=url_for("http://twitter.com/intent/tweet?text="+ twitter_text))
-    - var prev = page.prev ? page.prev.path : false;
-    - var next = page.next ? page.next.path : false;
-    .pagination
-      ul.clearfix
-        if prev
-          li.pre.pagbuttons
-            a.btn(role="navigation",href=url_for(prev), title=page.prev.title)!= __('prev_post')
-        if next
-          li.next.pagbuttons
-            a.btn(role="navigation",href=url_for(next), title=page.next.title)!= __('next_post')
-    if page.comments
-        include partial/comments
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="预览 &lt;!DOCTYPE html&gt; &lt;html lang&#x3D;&quot;en&quot;&gt;   &lt;head&gt;     &lt;meta charset&#x3D;&quot;UTF-8&quot; &#x2F;&gt;     &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原生js实现自定义样式的下拉选择">
+<meta property="og:url" content="http://example.com/2023/01/11/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B8%8B%E6%8B%89%E9%80%89%E6%8B%A9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="预览 &lt;!DOCTYPE html&gt; &lt;html lang&#x3D;&quot;en&quot;&gt;   &lt;head&gt;     &lt;meta charset&#x3D;&quot;UTF-8&quot; &#x2F;&gt;     &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-s">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-11T05:58:46.823Z">
+<meta property="article:modified_time" content="2023-01-11T05:58:46.823Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/01/11/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B8%8B%E6%8B%89%E9%80%89%E6%8B%A9/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/01/11/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B8%8B%E6%8B%89%E9%80%89%E6%8B%A9/","path":"2023/01/11/原生js实现自定义样式的下拉选择/","title":"原生js实现自定义样式的下拉选择"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>原生js实现自定义样式的下拉选择 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B8%8B%E6%8B%89%E9%80%89%E6%8B%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="原生js实现自定义样式的下拉选择 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          原生js实现自定义样式的下拉选择
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:46" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:46+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://7x7ofz.csb.app/">预览</a></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot; /&gt;
+    &lt;title&gt;Static Template&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;style&gt;
+    @charset &quot;UTF-8&quot;;
+    * &#123;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    &#125;
+    li &#123;
+      list-style: none;
+    &#125;
+    /*下拉框样式*/
+    #qy-select &#123;
+      background: #fff;
+      width: 120px;
+      height: 28px;
+      font-family: PingFangSC, &quot;Microsoft YaHei&quot;, sans-serif;
+      font-size: 14px;
+      color: #232d47;
+      border: 1px rgba(38, 42, 51, 0.16) solid;
+      border-radius: 4px;
+      user-select: none;
+      z-index: 9;
+    &#125;
+
+    #qy-select &gt; li &#123;
+      height: 100%;
+    &#125;
+
+    #qy-select .select-head &#123;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 0 10px;
+      line-height: 28px;
+      display: flex;
+      justify-content: space-around;
+    &#125;
+
+    #qy-select .select-head &gt; span &#123;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    &#125;
+
+    #qy-select .select-head .select-icon &#123;
+      width: 8px;
+      background: url(&quot;https://cowork-storage-public-cdn.lx.netease.com/common/2022/04/20/dd5d156dc30542f9b1de0349948eff8a.png&quot;)
+        no-repeat center;
+    &#125;
+
+    #qy-select .select-head .select-head-cont &#123;
+      float: left;
+    &#125;
+
+    #qy-select .select-head .select-icon &#123;
+      float: right;
+    &#125;
+
+    #qy-select .option &#123;
+      margin-top: 1px;
+      padding: 8px 0;
+      width: 100%;
+      color: #232d47;
+      background: #fff;
+      text-align: center;
+      border: 1px #cfcfcf solid;
+      display: none;
+      border-radius: 4px;
+    &#125;
+
+    #qy-select .option .option-item &#123;
+      height: 32px;
+      line-height: 32px;
+    &#125;
+
+    #qy-select .option-item:hover &#123;
+      background: #f0f0f1;
+      color: #386ee7;
+    &#125;
+
+    #qy-select:hover &#123;
+      cursor: default;
+    &#125;
+  &lt;/style&gt;
+  &lt;body&gt;
+    &lt;ul id=&quot;qy-select&quot; class=&quot;g-price-edit-account-select&quot;&gt;
+      &lt;li&gt;
+        &lt;div class=&quot;select-head&quot;&gt;
+          &lt;span class=&quot;select-head-cont&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;select-icon&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class=&quot;option&quot;&gt;
+          &lt;li class=&quot;option-item&quot; value=&quot;a5&quot; default=&quot;true&quot;&gt;5账户/年&lt;/li&gt;
+          &lt;li class=&quot;option-item&quot; value=&quot;a20&quot;&gt;20账户/年&lt;/li&gt;
+          &lt;li class=&quot;option-item&quot; value=&quot;a50&quot;&gt;50账户/年&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  (function () &#123;
+    /* 下拉选择框 */
+    var _selects = document.querySelectorAll(&quot;#qy-select&quot;);
+    _selects.forEach((_select, index) =&gt; &#123;
+      var selectHead = _select.getElementsByClassName(&quot;select-head&quot;)[0];
+      var selectHeadCont = _select.getElementsByClassName(&quot;select-head-cont&quot;);
+      var Option = _select.getElementsByClassName(&quot;option&quot;)[0];
+      var optionItem = _select.querySelectorAll(&quot;.option-item&quot;);
+      console.log(optionItem);
+      //   默认选中
+      optionItem.forEach((item, index) =&gt; &#123;
+        if (item.getAttribute(&quot;default&quot;)) &#123;
+          selectHeadCont[0].innerHTML = item.innerHTML;
+          selectHeadCont[0].setAttribute(&quot;value&quot;, item.getAttribute(&quot;value&quot;));
+        &#125;
+      &#125;);
+      /*出现下拉框*/
+      _select.addEventListener(
+        &quot;mouseenter&quot;,
+        function () &#123;
+          Option.style.display = &quot;block&quot;;
+        &#125;,
+        false
+      );
+      /*消失下拉框*/
+      _select.addEventListener(
+        &quot;mouseleave&quot;,
+        function () &#123;
+          Option.style.display = &quot;none&quot;;
+        &#125;,
+        false
+      );
+      /*点击选项后消失下拉框*/
+      var len = optionItem.length;
+      for (var i = 0; i &lt; len; i++) &#123;
+        optionItem[i].index = i;
+        optionItem[i].addEventListener(
+          &quot;click&quot;,
+          function () &#123;
+            selectHeadCont[0].innerHTML = optionItem[this.index].innerHTML;
+            selectHeadCont[0].setAttribute(
+              &quot;value&quot;,
+              optionItem[this.index].getAttribute(&quot;value&quot;)
+            );
+            Option.style.display = &quot;none&quot;;
+          &#125;,
+          false
+        );
+      &#125;
+    &#125;);
+  &#125;)();
+&lt;/script&gt;
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/11/vue%E5%9F%BA%E4%BA%8Eelement%E5%B0%81%E8%A3%85pro-table%20(%E6%90%9C%E7%B4%A2%E3%80%81%E8%A1%A8%E6%A0%BC%E3%80%81%E5%88%86%E9%A1%B5%E8%83%BD%E5%8A%9B)/" rel="prev" title="vue基于element封装pro-table (搜索、表格、分页能力)">
+                  <i class="fa fa-chevron-left"></i> vue基于element封装pro-table (搜索、表格、分页能力)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/11/Unable%20to%20prerender%20all%20routes(%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88)/" rel="next" title="Unable to prerender all routes(亲测有效)">
+                  Unable to prerender all routes(亲测有效) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

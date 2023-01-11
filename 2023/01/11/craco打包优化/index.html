@@ -1,35 +1,351 @@
-extends partial/layout
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
 
-include mixins
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-block site_title
-    != page.title + " · " + config.title
+<link rel="stylesheet" href="/css/main.css">
 
-block description
-    - var desc = page.desc || strip_html(page.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, 150);
-    meta(name="description", content=desc)
 
-block content
-  .autopagerize_page_element: .content: .post-page
-    include mixins
-    +make_post(page, true)
-    .share
-      .evernote
-        a.fa.fa-bookmark(href="",onclick="javascript:join_favorite()", ref="sidebar")
-      .weibo
-        a.fa.fa-weibo(href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&title=',e(d.title),'&appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));")
-      .twitter
-        - var twitter_text = encodeURI(__('Share_text') + "\n\n" + config.title+" · "+page.title+"\n"+config.url+"/"+page.path+"\n")
-        a.fa.fa-twitter(href=url_for("http://twitter.com/intent/tweet?text="+ twitter_text))
-    - var prev = page.prev ? page.prev.path : false;
-    - var next = page.next ? page.next.path : false;
-    .pagination
-      ul.clearfix
-        if prev
-          li.pre.pagbuttons
-            a.btn(role="navigation",href=url_for(prev), title=page.prev.title)!= __('prev_post')
-        if next
-          li.next.pagbuttons
-            a.btn(role="navigation",href=url_for(next), title=page.next.title)!= __('next_post')
-    if page.comments
-        include partial/comments
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本质还是webpack 1.查看包体积使用webpack-bundle-analyzer进行分析 const &amp;#123; BundleAnalyzerPlugin &amp;#125; &#x3D; require(&#39;webpack-bundle-analyzer&#39;);   new BundleAnalyzerPlugin(&amp;#123;         analyzerMode: &#39;ser">
+<meta property="og:type" content="article">
+<meta property="og:title" content="craco打包优化">
+<meta property="og:url" content="http://example.com/2023/01/11/craco%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本质还是webpack 1.查看包体积使用webpack-bundle-analyzer进行分析 const &amp;#123; BundleAnalyzerPlugin &amp;#125; &#x3D; require(&#39;webpack-bundle-analyzer&#39;);   new BundleAnalyzerPlugin(&amp;#123;         analyzerMode: &#39;ser">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f565c3a86ea547d89e04b8a391e3fa41.png">
+<meta property="article:published_time" content="2023-01-11T05:58:43.123Z">
+<meta property="article:modified_time" content="2023-01-11T05:58:43.123Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/f565c3a86ea547d89e04b8a391e3fa41.png">
+
+
+<link rel="canonical" href="http://example.com/2023/01/11/craco%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/01/11/craco%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/","path":"2023/01/11/craco打包优化/","title":"craco打包优化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>craco打包优化 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%9F%A5%E7%9C%8B%E5%8C%85%E4%BD%93%E7%A7%AF"><span class="nav-number">1.</span> <span class="nav-text">1.查看包体积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8splitChunks%E6%8B%86%E5%88%86%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">2 使用splitChunks拆分代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8babel-plugin-import%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">3.使用babel-plugin-import按需引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD-LazyLoadImage"><span class="nav-number">4.</span> <span class="nav-text">使用图片懒加载 LazyLoadImage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD"><span class="nav-number">5.</span> <span class="nav-text">css异步加载</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/11/craco%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="craco打包优化 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          craco打包优化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-11 13:58:43" itemprop="dateCreated datePublished" datetime="2023-01-11T13:58:43+08:00">2023-01-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本质还是webpack</p>
+<h2 id="1-查看包体积"><a href="#1-查看包体积" class="headerlink" title="1.查看包体积"></a>1.查看包体积</h2><p>使用webpack-bundle-analyzer进行分析</p>
+<pre><code>const &#123; BundleAnalyzerPlugin &#125; = require(&#39;webpack-bundle-analyzer&#39;); 
+ new BundleAnalyzerPlugin(&#123;
+        analyzerMode: &#39;server&#39;,
+        analyzerHost: &#39;127.0.0.1&#39;,
+        analyzerPort: 8888,
+        openAnalyzer: true, // 构建完打开浏览器
+        reportFilename: path.resolve(__dirname, `analyzer/index.html`), 
+    &#125;),
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/f565c3a86ea547d89e04b8a391e3fa41.png" alt="在这里插入图片描述"></p>
+<h2 id="2-使用splitChunks拆分代码"><a href="#2-使用splitChunks拆分代码" class="headerlink" title="2 使用splitChunks拆分代码"></a>2 使用splitChunks拆分代码</h2><pre><code>plugins:[],
+configure: (webpackConfig, &#123; env: webpackEnv, paths &#125;) =&gt; &#123;
+            webpackConfig.optimization.splitChunks = &#123;
+                ...webpackConfig.optimization.splitChunks,
+                cacheGroups: &#123;
+                    base: &#123;
+                        // 基本框架
+                        chunks: &#39;all&#39;,
+                        test: /(react|react-dom|react-dom-router|axios)/,
+                        name: &#39;base&#39;,
+                        priority: 100,
+                    &#125;,
+                    moment: &#123;
+                        test: /[\\/]node_modules[\\/]moment[\\/]/,
+                        name: &#39;moment&#39;,
+                        priority: 90,
+                    &#125;,
+                    // echarts: &#123;
+                    //     test: /(echarts)/,
+                    //     name: &#39;echarts&#39;,
+                    //     priority: 100,
+                    // &#125;,
+                    commons: &#123;
+                        chunks: &#39;all&#39;,
+                        // 将两个以上的chunk所共享的模块打包至commons组。
+                        minChunks: 2,
+                        name: &#39;commons&#39;,
+                        priority: 80,
+                    &#125;,
+                &#125;,
+            &#125;;
+            return webpackConfig;
+        &#125;
+</code></pre>
+<h2 id="3-使用babel-plugin-import按需引入"><a href="#3-使用babel-plugin-import按需引入" class="headerlink" title="3.使用babel-plugin-import按需引入"></a>3.使用babel-plugin-import按需引入</h2><pre><code> babel: &#123;
+    plugins: [
+      // 配置 babel-plugin-import ant按需加载
+      [
+        &#39;import&#39;,
+        &#123;
+          libraryName: &#39;antd&#39;,
+          libraryDirectory: &#39;es&#39;,
+          style: &#39;true&#39;,
+        &#125;,
+        &#39;antd&#39;,
+      ],
+      [
+        &#39;import&#39;,
+        &#123;
+          libraryName: &#39;moment&#39;,
+          libraryDirectory: &#39;es&#39;,
+          style: &#39;true&#39;,
+        &#125;,
+        &#39;moment&#39;,
+      ],
+    ],
+</code></pre>
+<h2 id="使用图片懒加载-LazyLoadImage"><a href="#使用图片懒加载-LazyLoadImage" class="headerlink" title="使用图片懒加载 LazyLoadImage"></a>使用图片懒加载 LazyLoadImage</h2><p>yarn add react-lazy-load-image-component</p>
+<h2 id="css异步加载"><a href="#css异步加载" class="headerlink" title="css异步加载"></a>css异步加载</h2><p>css文件的加载是会block网站渲染的 因此我们可以把css异步加载 具体方法</p>
+<pre><code>&lt;link href=&quot;73131f5.css&quot; rel=&quot;stylesheet&quot; media=&quot;jscourse&quot; onload=&quot;this.media=&#39;all&#39;&quot; /&gt;
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/11/zsh%E6%8A%A5%E9%94%99%20Insecure%20completion-dependent%20directories%20detected/" rel="prev" title="zsh报错 Insecure completion-dependent directories detected">
+                  <i class="fa fa-chevron-left"></i> zsh报错 Insecure completion-dependent directories detected
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/11/brew%E6%8D%A2%E6%BA%90/" rel="next" title="brew换源">
+                  brew换源 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
