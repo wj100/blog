@@ -1,233 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  
-  <title>mysql启动时报错---发现系统错误2，系统找不到指定的文件 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="启动mysql时一直提示 发现系统错误2，系统找不到指定的文件，原因是之前启动XAMPP时修改了注册表的启动路径再改回来就可以了1，打开注册表方式cmd输入regedit2，3，这里填的其实也不是真的mysql路径而是bin目录下的mysqld，保存就可以启动了">
-<meta property="og:type" content="article">
-<meta property="og:title" content="mysql启动时报错---发现系统错误2，系统找不到指定的文件">
-<meta property="og:url" content="http://example.com/2023/01/11/mysql%E5%90%AF%E5%8A%A8%E6%97%B6%E6%8A%A5%E9%94%99---%E5%8F%91%E7%8E%B0%E7%B3%BB%E7%BB%9F%E9%94%99%E8%AF%AF2%EF%BC%8C%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E6%96%87%E4%BB%B6/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="启动mysql时一直提示 发现系统错误2，系统找不到指定的文件，原因是之前启动XAMPP时修改了注册表的启动路径再改回来就可以了1，打开注册表方式cmd输入regedit2，3，这里填的其实也不是真的mysql路径而是bin目录下的mysqld，保存就可以启动了">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2019061309391322.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190613093937139.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2023-01-11T05:58:58.912Z">
-<meta property="article:modified_time" content="2023-01-11T05:58:58.912Z">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2019061309391322.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+extends partial/layout
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+include mixins
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+block site_title
+    != page.title + " · " + config.title
 
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
+block description
+    - var desc = page.desc || strip_html(page.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, 150);
+    meta(name="description", content=desc)
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main"><article id="post-mysql启动时报错---发现系统错误2，系统找不到指定的文件" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/01/11/mysql%E5%90%AF%E5%8A%A8%E6%97%B6%E6%8A%A5%E9%94%99---%E5%8F%91%E7%8E%B0%E7%B3%BB%E7%BB%9F%E9%94%99%E8%AF%AF2%EF%BC%8C%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E6%96%87%E4%BB%B6/" class="article-date">
-  <time class="dt-published" datetime="2023-01-11T05:58:58.912Z" itemprop="datePublished">2023-01-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      mysql启动时报错---发现系统错误2，系统找不到指定的文件
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>启动mysql时一直提示 发现系统错误2，系统找不到指定的文件，原因是之前启动XAMPP时修改了注册表的启动路径<br>再改回来就可以了<br>1，打开注册表方式cmd输入regedit<br>2，<img src="https://img-blog.csdnimg.cn/2019061309391322.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>3，<img src="https://img-blog.csdnimg.cn/20190613093937139.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">这里填的其实也不是真的mysql路径<br>而是bin目录下的mysqld，保存就可以启动了</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/11/mysql%E5%90%AF%E5%8A%A8%E6%97%B6%E6%8A%A5%E9%94%99---%E5%8F%91%E7%8E%B0%E7%B3%BB%E7%BB%9F%E9%94%99%E8%AF%AF2%EF%BC%8C%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E6%96%87%E4%BB%B6/" data-id="clcr94n6b000dtl0ke9b33isp" data-title="mysql启动时报错---发现系统错误2，系统找不到指定的文件" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2023/01/11/%E5%A6%82%E4%BD%95%E5%9C%A8vue%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%AE%9A%E4%B9%89%E5%85%AC%E5%85%B1%E7%9A%84less%E5%8F%98%E9%87%8F%EF%BC%8C%E5%9C%A8%E7%BB%84%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          如何在vue项目中定义公共的less变量，在组件中使用
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2023/01/11/vue%E5%AE%9E%E7%8E%B0%E9%80%89%E4%B8%ADli%E5%8F%98%E8%89%B2--%E5%B0%8F%E6%8A%80%E5%B7%A7/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">vue实现选中li变色--小技巧</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/01/11/%E7%89%A9%E7%90%86%E6%9C%BA%E5%AE%89%E8%A3%85Ubuntu/">物理机安装Ubuntu</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/11/Enter%20passphrase%20for%20key(%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD)/">Enter passphrase for key(输入密码短语)</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/11/mac%E7%94%B5%E8%84%91git%20clone%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90/">mac电脑git clone提示没有权限</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/11/echarts%E5%8F%AF%E6%8B%96%E6%8B%BD%E6%9F%B1%E5%BD%A2%E5%9B%BE/">echarts可拖拽柱形图</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/11/nginx%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%8F%8A%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F/">nginx基础使用及代理跨域</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2023 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
-</body>
-</html>
+block content
+  .autopagerize_page_element: .content: .post-page
+    include mixins
+    +make_post(page, true)
+    .share
+      .evernote
+        a.fa.fa-bookmark(href="",onclick="javascript:join_favorite()", ref="sidebar")
+      .weibo
+        a.fa.fa-weibo(href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&title=',e(d.title),'&appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));")
+      .twitter
+        - var twitter_text = encodeURI(__('Share_text') + "\n\n" + config.title+" · "+page.title+"\n"+config.url+"/"+page.path+"\n")
+        a.fa.fa-twitter(href=url_for("http://twitter.com/intent/tweet?text="+ twitter_text))
+    - var prev = page.prev ? page.prev.path : false;
+    - var next = page.next ? page.next.path : false;
+    .pagination
+      ul.clearfix
+        if prev
+          li.pre.pagbuttons
+            a.btn(role="navigation",href=url_for(prev), title=page.prev.title)!= __('prev_post')
+        if next
+          li.next.pagbuttons
+            a.btn(role="navigation",href=url_for(next), title=page.next.title)!= __('next_post')
+    if page.comments
+        include partial/comments

@@ -1,292 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  
-  <title>nginx基础使用及代理跨域 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="nginx 根目录brew info nginx 一,下载解压(无需安装)路径不能出现中文下载地址 二,修改配置文件根目录&gt;conf&gt;nginx.confserver{}里面为一个服务,默认80,访问index.html server &amp;#123;         listen       5000;         server_name  localhost;          #">
-<meta property="og:type" content="article">
-<meta property="og:title" content="nginx基础使用及代理跨域">
-<meta property="og:url" content="http://example.com/2023/01/11/nginx%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%8F%8A%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="nginx 根目录brew info nginx 一,下载解压(无需安装)路径不能出现中文下载地址 二,修改配置文件根目录&gt;conf&gt;nginx.confserver{}里面为一个服务,默认80,访问index.html server &amp;#123;         listen       5000;         server_name  localhost;          #">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200120161957485.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200120161935214.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200120161412180.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200120163825295.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200120163936235.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200120164315277.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210630200426927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2023-01-11T05:59:03.691Z">
-<meta property="article:modified_time" content="2023-01-11T05:59:03.691Z">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200120161957485.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+extends partial/layout
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+include mixins
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+block site_title
+    != page.title + " · " + config.title
 
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
+block description
+    - var desc = page.desc || strip_html(page.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, 150);
+    meta(name="description", content=desc)
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main"><article id="post-nginx基础使用及代理跨域" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/01/11/nginx%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%8F%8A%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F/" class="article-date">
-  <time class="dt-published" datetime="2023-01-11T05:59:03.691Z" itemprop="datePublished">2023-01-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      nginx基础使用及代理跨域
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>nginx 根目录<br>brew info nginx</p>
-<h2 id="一-下载解压-无需安装"><a href="#一-下载解压-无需安装" class="headerlink" title="一,下载解压(无需安装)"></a>一,下载解压(无需安装)</h2><p>路径不能出现中文<br><a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">下载地址</a></p>
-<h2 id="二-修改配置文件"><a href="#二-修改配置文件" class="headerlink" title="二,修改配置文件"></a>二,修改配置文件</h2><p>根目录&gt;conf&gt;nginx.conf<br>server{}里面为一个服务,默认80,访问index.html</p>
-<pre><code>server &#123;
-        listen       5000;
-        server_name  localhost;
-
-        #charset koi8-r;
-
-        #access_log  logs/host.access.log  main;
-
-        location / &#123;
-            root   html;
-            index  index.html index.htm;
-        &#125;
-</code></pre>
-<h2 id="三-常见命令"><a href="#三-常见命令" class="headerlink" title="三,常见命令"></a>三,常见命令</h2><p>启动</p>
-<pre><code>start nginx
-</code></pre>
-<p>查看进程</p>
-<pre><code>tasklist /fi &quot;imagename eq nginx.exe&quot;
-</code></pre>
-<p>修改配置文件之后的重启</p>
-<pre><code>nginx -s reload
-</code></pre>
-<p>快速停止</p>
-<pre><code>nginx -s stop
-</code></pre>
-<p>有序停止</p>
-<pre><code>nginx -s quit
-</code></pre>
-<h1 id="以上说的是作为容器部署项目-现在说说利用nginx跨域"><a href="#以上说的是作为容器部署项目-现在说说利用nginx跨域" class="headerlink" title="以上说的是作为容器部署项目,现在说说利用nginx跨域"></a>以上说的是作为容器部署项目,现在说说利用nginx跨域</h1><p><strong>如果后台因为种种原因不能开放CORS,而jsonp又只能解决get请求<br>在vue项目中,开发环境我们可以配置node代理跨域<br>打包之后部署nginx反向代理跨域…</strong></p>
-<h2 id="一-用node在本地起一个服务-端口为3000"><a href="#一-用node在本地起一个服务-端口为3000" class="headerlink" title="一,用node在本地起一个服务(端口为3000)"></a>一,用node在本地起一个服务(端口为3000)</h2><p><img src="https://img-blog.csdnimg.cn/20200120161957485.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="二-写一个简单的ajax请求-部署在nginx中-端口为5000"><a href="#二-写一个简单的ajax请求-部署在nginx中-端口为5000" class="headerlink" title="二,写一个简单的ajax请求,部署在nginx中(端口为5000)"></a>二,写一个简单的ajax请求,部署在nginx中(端口为5000)</h2><p><img src="https://img-blog.csdnimg.cn/20200120161935214.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="三-发起请求后出现跨域问题"><a href="#三-发起请求后出现跨域问题" class="headerlink" title="三,发起请求后出现跨域问题"></a>三,发起请求后出现跨域问题</h2><p>因为客户端在5000端口,服务端在3000端口<br><img src="https://img-blog.csdnimg.cn/20200120161412180.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="四-配置代理-nginx-conf"><a href="#四-配置代理-nginx-conf" class="headerlink" title="四,配置代理(nginx.conf)"></a>四,配置代理(nginx.conf)</h2><p>将本服务器的地址转发为后台的接口地址,即可解决跨域</p>
-<pre><code> listen       5000;
-        server_name  localhost;
-
-        #charset koi8-r;
-
-        #access_log  logs/host.access.log  main;
-
-        location / &#123;
-            root   html;
-            index  index.html index.htm;
-        &#125;
-          # 新加的
-        location /api &#123;
-            proxy_pass   http://localhost:3000; # 后端接口 IP:port
-        &#125;
-</code></pre>
-<p>修改一下地址<br><img src="https://img-blog.csdnimg.cn/20200120163825295.png" alt="在这里插入图片描述"></p>
-<h2 id="五-前端跨域成功"><a href="#五-前端跨域成功" class="headerlink" title="五,前端跨域成功"></a>五,前端跨域成功</h2><p><img src="https://img-blog.csdnimg.cn/20200120163936235.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>看看代理之后的地址<br><img src="https://img-blog.csdnimg.cn/20200120164315277.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>还有很多种配置代理跨域的方法 个人认为这种比较简单</p>
-<h1 id="有想换工作的同学可以找我内推哦不低于15k（前端，java，测试）"><a href="#有想换工作的同学可以找我内推哦不低于15k（前端，java，测试）" class="headerlink" title="有想换工作的同学可以找我内推哦不低于15k（前端，java，测试）"></a>有想换工作的同学可以找我内推哦不低于15k（前端，java，测试）</h1><p><img src="https://img-blog.csdnimg.cn/20210630200426927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NDcyNzIy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/11/nginx%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%8F%8A%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F/" data-id="clcr94n6b000etl0kfmzxgwkc" data-title="nginx基础使用及代理跨域" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2023/01/11/echarts%E5%8F%AF%E6%8B%96%E6%8B%BD%E6%9F%B1%E5%BD%A2%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          echarts可拖拽柱形图
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2023/01/11/myUtils.js-%E5%B7%A5%E4%BD%9C%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">myUtils.js-工作中常用的工具函数</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/01/11/%E7%89%A9%E7%90%86%E6%9C%BA%E5%AE%89%E8%A3%85Ubuntu/">物理机安装Ubuntu</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/11/Enter%20passphrase%20for%20key(%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD)/">Enter passphrase for key(输入密码短语)</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/11/mac%E7%94%B5%E8%84%91git%20clone%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90/">mac电脑git clone提示没有权限</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/11/echarts%E5%8F%AF%E6%8B%96%E6%8B%BD%E6%9F%B1%E5%BD%A2%E5%9B%BE/">echarts可拖拽柱形图</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/11/nginx%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%8F%8A%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F/">nginx基础使用及代理跨域</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2023 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
-</body>
-</html>
+block content
+  .autopagerize_page_element: .content: .post-page
+    include mixins
+    +make_post(page, true)
+    .share
+      .evernote
+        a.fa.fa-bookmark(href="",onclick="javascript:join_favorite()", ref="sidebar")
+      .weibo
+        a.fa.fa-weibo(href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&title=',e(d.title),'&appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));")
+      .twitter
+        - var twitter_text = encodeURI(__('Share_text') + "\n\n" + config.title+" · "+page.title+"\n"+config.url+"/"+page.path+"\n")
+        a.fa.fa-twitter(href=url_for("http://twitter.com/intent/tweet?text="+ twitter_text))
+    - var prev = page.prev ? page.prev.path : false;
+    - var next = page.next ? page.next.path : false;
+    .pagination
+      ul.clearfix
+        if prev
+          li.pre.pagbuttons
+            a.btn(role="navigation",href=url_for(prev), title=page.prev.title)!= __('prev_post')
+        if next
+          li.next.pagbuttons
+            a.btn(role="navigation",href=url_for(next), title=page.next.title)!= __('next_post')
+    if page.comments
+        include partial/comments
