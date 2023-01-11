@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hello World | Hexo</title>
+  <title>后端返回文件流 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="hello">
+  <meta name="description" content="记得请求时加上method: “get”,responseType:‘blob’, &#x2F;&#x2F; 这里很重要 把拿到的流传进下面的方法 function downloadFile(obj, name, suffix) &amp;#123;   const url &#x3D; window.URL.createObjectURL(new Blob([obj]));   const link &#x3D; docu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2023/01/11/hello-world/index.html">
+<meta property="og:title" content="后端返回文件流">
+<meta property="og:url" content="http://example.com/2023/01/11/%E5%90%8E%E7%AB%AF%E8%BF%94%E5%9B%9E%E6%96%87%E4%BB%B6%E6%B5%81/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="hello">
+<meta property="og:description" content="记得请求时加上method: “get”,responseType:‘blob’, &#x2F;&#x2F; 这里很重要 把拿到的流传进下面的方法 function downloadFile(obj, name, suffix) &amp;#123;   const url &#x3D; window.URL.createObjectURL(new Blob([obj]));   const link &#x3D; docu">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-01-11T04:00:38.248Z">
-<meta property="article:modified_time" content="2023-01-11T05:44:55.081Z">
+<meta property="article:published_time" content="2023-01-11T05:58:41.298Z">
+<meta property="article:modified_time" content="2023-01-11T05:58:41.298Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -73,10 +73,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-后端返回文件流" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/01/11/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2023-01-11T04:00:38.248Z" itemprop="datePublished">2023-01-11</time>
+    <a href="/2023/01/11/%E5%90%8E%E7%AB%AF%E8%BF%94%E5%9B%9E%E6%96%87%E4%BB%B6%E6%B5%81/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:41.298Z" itemprop="datePublished">2023-01-11</time>
 </a>
     
   </div>
@@ -87,7 +87,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Hello World
+      后端返回文件流
     </h1>
   
 
@@ -95,12 +95,25 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>hello</p>
+        <p>记得请求时加上<br>method: “get”,<br>responseType:‘blob’, &#x2F;&#x2F; 这里很重要</p>
+<p>把拿到的流传进下面的方法</p>
+<pre><code>function downloadFile(obj, name, suffix) &#123;
+  const url = window.URL.createObjectURL(new Blob([obj]));
+  const link = document.createElement(&quot;a&quot;);
+  link.style.display = &quot;none&quot;;
+  link.href = url;
+  const fileName = parseTime(new Date()) + &quot;-&quot; + name + &quot;.&quot; + suffix;
+  link.setAttribute(&quot;download&quot;, fileName);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+&#125;
+</code></pre>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/11/hello-world/" data-id="clcr94n690008tl0k8qvl23a3" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/11/%E5%90%8E%E7%AB%AF%E8%BF%94%E5%9B%9E%E6%96%87%E4%BB%B6%E6%B5%81/" data-id="clcr94n6e000ttl0kcvxmcbyn" data-title="后端返回文件流" class="article-share-link">Share</a>
       
       
       
@@ -110,15 +123,20 @@
     
 <nav id="article-nav">
   
-    <a href="/2023/01/11/%E5%89%8D%E7%AB%AF%E5%8A%9D%E9%80%80%E5%B7%A5%E7%A8%8B%E5%B8%88/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2023/01/11/zsh%E6%8A%A5%E9%94%99%20Insecure%20completion-dependent%20directories%20detected/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          前端劝退工程师
+          zsh报错 Insecure completion-dependent directories detected
         
       </div>
     </a>
   
+  
+    <a href="/2023/01/11/%E5%89%8D%E7%AB%AF%E5%8A%9D%E9%80%80%E5%B7%A5%E7%A8%8B%E5%B8%88/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">前端劝退工程师</div>
+    </a>
   
 </nav>
 

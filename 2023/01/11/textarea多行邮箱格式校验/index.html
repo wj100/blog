@@ -4,19 +4,21 @@
   <meta charset="utf-8">
   
   
-  <title>Hello World | Hexo</title>
+  <title>textarea多行邮箱格式校验 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="hello">
+  <meta name="description" content="效果代码 vue element const validMail &#x3D; (rule, value, callback) &#x3D;&gt; &amp;#123;       if (!value) &amp;#123;         callback(new Error(&#39;请输入邮箱&#39;));       &amp;#125;       value &#x3D; value.replace(&#x2F;[\n]&#x2F;g, &#39;,&amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2023/01/11/hello-world/index.html">
+<meta property="og:title" content="textarea多行邮箱格式校验">
+<meta property="og:url" content="http://example.com/2023/01/11/textarea%E5%A4%9A%E8%A1%8C%E9%82%AE%E7%AE%B1%E6%A0%BC%E5%BC%8F%E6%A0%A1%E9%AA%8C/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="hello">
+<meta property="og:description" content="效果代码 vue element const validMail &#x3D; (rule, value, callback) &#x3D;&gt; &amp;#123;       if (!value) &amp;#123;         callback(new Error(&#39;请输入邮箱&#39;));       &amp;#125;       value &#x3D; value.replace(&#x2F;[\n]&#x2F;g, &#39;,&amp;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-01-11T04:00:38.248Z">
-<meta property="article:modified_time" content="2023-01-11T05:44:55.081Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/cfdd54aca2bb4163bbf2b597e5296cbf.png">
+<meta property="article:published_time" content="2023-01-11T05:58:44.742Z">
+<meta property="article:modified_time" content="2023-01-11T05:58:44.742Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/cfdd54aca2bb4163bbf2b597e5296cbf.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -73,10 +75,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-textarea多行邮箱格式校验" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/01/11/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2023-01-11T04:00:38.248Z" itemprop="datePublished">2023-01-11</time>
+    <a href="/2023/01/11/textarea%E5%A4%9A%E8%A1%8C%E9%82%AE%E7%AE%B1%E6%A0%BC%E5%BC%8F%E6%A0%A1%E9%AA%8C/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:44.742Z" itemprop="datePublished">2023-01-11</time>
 </a>
     
   </div>
@@ -87,7 +89,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Hello World
+      textarea多行邮箱格式校验
     </h1>
   
 
@@ -95,12 +97,39 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>hello</p>
+        <p>效果<br><img src="https://img-blog.csdnimg.cn/cfdd54aca2bb4163bbf2b597e5296cbf.png" alt="在这里插入图片描述"><br>代码 vue element</p>
+<pre><code>const validMail = (rule, value, callback) =&gt; &#123;
+      if (!value) &#123;
+        callback(new Error(&#39;请输入邮箱&#39;));
+      &#125;
+      value = value.replace(/[\n]/g, &#39;,&#39;);
+      const reg = RegExp(/^(?=.*\.)(?=.*@).*$/);
+      if (!value.includes(&#39;,&#39;)) &#123;
+        if (!reg.test(value)) &#123;
+          callback(new Error(&#39;邮箱格式错误&#39;));
+        &#125; else &#123;
+          callback();
+        &#125;
+      &#125; else &#123;
+        let flag = -1;
+        value.split(&#39;,&#39;).map((mail, index) =&gt; &#123;
+          if (mail &amp;&amp; !reg.test(mail)) &#123;
+            flag = index;
+          &#125;
+        &#125;);
+        if (flag !== -1) &#123;
+          callback(new Error(`第$&#123;flag + 1&#125;行邮箱格式错误`));
+        &#125; else &#123;
+          callback();
+        &#125;
+      &#125;
+    &#125;;
+</code></pre>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/11/hello-world/" data-id="clcr94n690008tl0k8qvl23a3" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/11/textarea%E5%A4%9A%E8%A1%8C%E9%82%AE%E7%AE%B1%E6%A0%BC%E5%BC%8F%E6%A0%A1%E9%AA%8C/" data-id="clcr94n6b000gtl0k0yy75s24" data-title="textarea多行邮箱格式校验" class="article-share-link">Share</a>
       
       
       
@@ -110,15 +139,20 @@
     
 <nav id="article-nav">
   
-    <a href="/2023/01/11/%E5%89%8D%E7%AB%AF%E5%8A%9D%E9%80%80%E5%B7%A5%E7%A8%8B%E5%B8%88/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2023/01/11/vue%E5%9F%BA%E4%BA%8Eelement%E5%B0%81%E8%A3%85pro-table%20(%E6%90%9C%E7%B4%A2%E3%80%81%E8%A1%A8%E6%A0%BC%E3%80%81%E5%88%86%E9%A1%B5%E8%83%BD%E5%8A%9B)/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          前端劝退工程师
+          vue基于element封装pro-table (搜索、表格、分页能力)
         
       </div>
     </a>
   
+  
+    <a href="/2023/01/11/brew%E6%8D%A2%E6%BA%90/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">brew换源</div>
+    </a>
   
 </nav>
 

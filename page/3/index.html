@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-原生js拖拽滑动条" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/%E5%8E%9F%E7%94%9Fjs%E6%8B%96%E6%8B%BD%E6%BB%91%E5%8A%A8%E6%9D%A1/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:50.211Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/11/%E5%8E%9F%E7%94%9Fjs%E6%8B%96%E6%8B%BD%E6%BB%91%E5%8A%A8%E6%9D%A1/">原生js拖拽滑动条</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+    &lt;style&gt;
+        #wrap&#123;
+            width: 500px;
+            height: 10px;
+            background-color: red;
+            position: relative;
+        &#125;
+        .bar_container&#123;
+            width: 100%;
+            height: 100%;
+            background-color: aqua;
+        &#125;
+        .bar_into&#123;
+            height: 100%;
+            background-color: black;
+            /* width: 100px; */
+            width: 0;
+        &#125;
+        .bar_drag&#123;
+            width: 10px;
+            height: 10px;
+            background-color: blue;
+            position: absolute;
+            cursor: default;
+           top: 0;left: 0;
+        &#125;
+        .bar_text&#123;
+            color: black;
+            margin-top: 50px;
+        &#125;
+        .xxx&#123;
+            /* background-color: red; */
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            cursor: default;
+        &#125;
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;bar_wrap&quot; id=&quot;wrap&quot;&gt;&lt;!--外包裹元素--&gt;
+        &lt;div class=&quot;bar_container&quot;&gt;&lt;!--滑动条--&gt;
+          &lt;div class=&quot;bar_into&quot;&gt;&lt;/div&gt;&lt;!--滑动痕迹--&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;bar_drag&quot;&gt;&lt;!--滑块--&gt;
+          &lt;div class=&quot;bar_text&quot;&gt;&lt;/div&gt;&lt;!--文本--&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;xxx&quot;&gt;
+            &lt;span&gt;0&lt;/span&gt;
+            &lt;span&gt;100&lt;/span&gt;
+            &lt;span&gt;200&lt;/span&gt;
+            &lt;span&gt;300&lt;/span&gt;
+            &lt;span&gt;400&lt;/span&gt;
+            &lt;span&gt;500&lt;/span&gt;
+          &lt;/div&gt;
+      &lt;/div&gt;
+     
+&lt;/body&gt;
+&lt;script&gt;    
+//获取外包裹元素
+var eBarWrap = document.getElementById(&#39;wrap&#39;);
+  //获取滑动条
+  var eBarCon = eBarWrap.getElementsByClassName(&#39;bar_container&#39;)[0];
+  //获取滑动痕迹元素
+  var eBarInto = eBarWrap.getElementsByClassName(&#39;bar_into&#39;)[0];
+  //获取滑块
+  var eBarDrag = eBarWrap.getElementsByClassName(&#39;bar_drag&#39;)[0];
+  //获取文本元素
+  var eBarText = eBarWrap.getElementsByClassName(&#39;bar_text&#39;)[0];
+  eBarText.innerHTML = 0;
+  var nMax = eBarCon.offsetWidth - eBarDrag.offsetWidth;
+  //滑块添加拖拽事件
+  eBarDrag.addEventListener(&#39;mousedown&#39;,function(event)&#123;
+    //初始化鼠标开始拖拽的点击位置
+    var nInitX = event.clientX;
+    //初始化滑块位置
+    var nInitLeft = this.offsetLeft;
+    //页面绑定鼠标移动事件
+    document.onmousemove = event=&gt;&#123;
+      //鼠标移动时取消默认行为，避免选中其他元素或文字
+      event.preventDefault();
+      //获取鼠标移动后滑块应该移动到的位置
+      let nX = event.clientX - nInitX + nInitLeft;
+      //限制滑块最大移动位置
+      if(nX&gt;=nMax)&#123;
+        nX = nMax;
+      &#125;
+      //限制滑块最小移动位置
+      if(nX&lt;=0)&#123;
+        nX = 0;
+      &#125;
+      //修改滑块位置（因为用的是箭头函数，所以this还是指向滑块）
+      this.style.left = nX + &#39;px&#39;;
+      //修改滑动痕迹宽度
+      console.log(&#39;nx---&#39;,nX)
+      eBarInto.style.width = nX + this.offsetWidth/2 + &#39;px&#39;;
+      //修改文本数值
+      eBarText.innerHTML = Math.ceil(nX/nMax*100)/0.2;
+    &#125;;
+     //鼠标松开绑定事件，取消页面上所有事件
+     document.onmouseup = function(event)&#123;
+      document.onmousemove = null;
+      document.onmouseup = null;
+      
+    &#125;
+  &#125;);
+  //滑动条添加点击事件
+  eBarCon.addEventListener(&#39;click&#39;,function(event)&#123;
+    //设置滑动条位置
+    var nLeft = this.offsetLeft;
+    //获取有定位的父元素
+    var eParent = this.offsetParent;
+    //循环所有有定位的父元素
+    while(eParent)&#123;
+      //添加定位父元素offsetLeft值，用于准确定位滑动条与页面左侧的距离 
+      nLeft += eParent.offsetLeft;
+      //再次获取父元素外的定位父元素
+      eParent = eParent.offsetParent;
+    &#125;
+    //计算滑块位置
+    var nX = event.clientX - nLeft;
+    //修改滑块位置
+    eBarDrag.style.left = nX +&#39;px&#39;;
+    //修改滑动痕迹宽度
+    eBarInto.style.width = nX + eBarDrag.offsetWidth/2 + &#39;px&#39;;
+    //修改文本数值
+    eBarText.innerHTML = Math.ceil(nX/nMax*100)/10
+  &#125;);
+&lt;/script&gt;
+&lt;/html&gt;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/%E5%8E%9F%E7%94%9Fjs%E6%8B%96%E6%8B%BD%E6%BB%91%E5%8A%A8%E6%9D%A1/" data-id="clcr94n6d000rtl0k20lycj1b" data-title="原生js拖拽滑动条" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-css实现icon动画效果" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/css%E5%AE%9E%E7%8E%B0icon%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:49.375Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/11/css%E5%AE%9E%E7%8E%B0icon%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/">css实现icon动画效果</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h4><p><a target="_blank" rel="noopener" href="https://hve39i.csb.app/">链接</a></p>
+<h4 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h4><ul>
+<li>ui将动画拆成n张图拼在一起</li>
+<li>使用background-position属性控制变化</li>
+<li>animation属性 steps(n) 将动画拆成n关键帧</li>
+</ul>
+<h4 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h4><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+    &lt;style&gt;
+         @keyframes entery &#123;
+            0% &#123;
+              background-position: 0 0;
+            &#125;
+            to &#123;
+              background-position: 0 -4500px;
+            &#125;
+          &#125;
+          @keyframes leave &#123;
+            0% &#123;
+              background-position: 0 -4500px;
+            &#125;
+          
+            100% &#123;
+              background-position: 0 0;
+            &#125;
+          &#125;
+        .div&#123;
+            width: 150px;
+            height: 150px;
+            border: 1px solid red;
+            background-image: url(http://tva1.sinaimg.cn/large/0088t8Tlly1h71bmadw9rj308c76ce81.jpg);
+            background-size: 150px;
+            background-position: center 0;
+            animation: leave 0.4s steps(15) forwards;
+        &#125;
+        .div:hover&#123;
+            animation: entery 0.4s steps(15) forwards;
+        &#125;
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;div&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/css%E5%AE%9E%E7%8E%B0icon%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/" data-id="clcr94n680005tl0k7uk8cbat" data-title="css实现icon动画效果" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mac鼠标和触控板方向相同" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/mac%E9%BC%A0%E6%A0%87%E5%92%8C%E8%A7%A6%E6%8E%A7%E6%9D%BF%E6%96%B9%E5%90%91%E7%9B%B8%E5%90%8C/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:48.569Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/11/mac%E9%BC%A0%E6%A0%87%E5%92%8C%E8%A7%A6%E6%8E%A7%E6%9D%BF%E6%96%B9%E5%90%91%E7%9B%B8%E5%90%8C/">mac鼠标和触控板方向相同</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="下载scrollreverser"><a href="#下载scrollreverser" class="headerlink" title="下载scrollreverser"></a>下载scrollreverser</h2><p><a target="_blank" rel="noopener" href="https://pilotmoon.com/scrollreverser/">https://pilotmoon.com/scrollreverser/</a></p>
+<h2 id="勾选方向自然"><a href="#勾选方向自然" class="headerlink" title="勾选方向自然"></a>勾选方向自然</h2><h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p><img src="https://img-blog.csdnimg.cn/784eb81101c3424688e392533da07120.png" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/mac%E9%BC%A0%E6%A0%87%E5%92%8C%E8%A7%A6%E6%8E%A7%E6%9D%BF%E6%96%B9%E5%90%91%E7%9B%B8%E5%90%8C/" data-id="clcr94n6a000btl0k92godqii" data-title="mac鼠标和触控板方向相同" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Unable to prerender all routes(亲测有效)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/Unable%20to%20prerender%20all%20routes(%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88)/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:47.756Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/11/Unable%20to%20prerender%20all%20routes(%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88)/">Unable to prerender all routes(亲测有效)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>使用prerender-spa-plugin打包报错<br>mac下这里设置为 headless: true,<br>更换插件</p>
+<pre><code>yarn add @dreysolano/prerender-spa-plugin
+
+
+
+const PrerenderSPAPlugin = require(&#39;@dreysolano/prerender-spa-plugin&#39;);
+</code></pre>
+<h3 id="因为使用了webpack5-有些插件没有更新导致的"><a href="#因为使用了webpack5-有些插件没有更新导致的" class="headerlink" title="因为使用了webpack5 有些插件没有更新导致的"></a>因为使用了webpack5 有些插件没有更新导致的</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/Unable%20to%20prerender%20all%20routes(%E4%BA%B2%E6%B5%8B%E6%9C%89%E6%95%88)/" data-id="clcr94n660001tl0k6j3udhef" data-title="Unable to prerender all routes(亲测有效)" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-原生js实现自定义样式的下拉选择" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B8%8B%E6%8B%89%E9%80%89%E6%8B%A9/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:46.823Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/11/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B8%8B%E6%8B%89%E9%80%89%E6%8B%A9/">原生js实现自定义样式的下拉选择</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="https://7x7ofz.csb.app/">预览</a></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot; /&gt;
+    &lt;title&gt;Static Template&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;style&gt;
+    @charset &quot;UTF-8&quot;;
+    * &#123;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    &#125;
+    li &#123;
+      list-style: none;
+    &#125;
+    /*下拉框样式*/
+    #qy-select &#123;
+      background: #fff;
+      width: 120px;
+      height: 28px;
+      font-family: PingFangSC, &quot;Microsoft YaHei&quot;, sans-serif;
+      font-size: 14px;
+      color: #232d47;
+      border: 1px rgba(38, 42, 51, 0.16) solid;
+      border-radius: 4px;
+      user-select: none;
+      z-index: 9;
+    &#125;
+
+    #qy-select &gt; li &#123;
+      height: 100%;
+    &#125;
+
+    #qy-select .select-head &#123;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 0 10px;
+      line-height: 28px;
+      display: flex;
+      justify-content: space-around;
+    &#125;
+
+    #qy-select .select-head &gt; span &#123;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    &#125;
+
+    #qy-select .select-head .select-icon &#123;
+      width: 8px;
+      background: url(&quot;https://cowork-storage-public-cdn.lx.netease.com/common/2022/04/20/dd5d156dc30542f9b1de0349948eff8a.png&quot;)
+        no-repeat center;
+    &#125;
+
+    #qy-select .select-head .select-head-cont &#123;
+      float: left;
+    &#125;
+
+    #qy-select .select-head .select-icon &#123;
+      float: right;
+    &#125;
+
+    #qy-select .option &#123;
+      margin-top: 1px;
+      padding: 8px 0;
+      width: 100%;
+      color: #232d47;
+      background: #fff;
+      text-align: center;
+      border: 1px #cfcfcf solid;
+      display: none;
+      border-radius: 4px;
+    &#125;
+
+    #qy-select .option .option-item &#123;
+      height: 32px;
+      line-height: 32px;
+    &#125;
+
+    #qy-select .option-item:hover &#123;
+      background: #f0f0f1;
+      color: #386ee7;
+    &#125;
+
+    #qy-select:hover &#123;
+      cursor: default;
+    &#125;
+  &lt;/style&gt;
+  &lt;body&gt;
+    &lt;ul id=&quot;qy-select&quot; class=&quot;g-price-edit-account-select&quot;&gt;
+      &lt;li&gt;
+        &lt;div class=&quot;select-head&quot;&gt;
+          &lt;span class=&quot;select-head-cont&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;select-icon&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;ul class=&quot;option&quot;&gt;
+          &lt;li class=&quot;option-item&quot; value=&quot;a5&quot; default=&quot;true&quot;&gt;5账户/年&lt;/li&gt;
+          &lt;li class=&quot;option-item&quot; value=&quot;a20&quot;&gt;20账户/年&lt;/li&gt;
+          &lt;li class=&quot;option-item&quot; value=&quot;a50&quot;&gt;50账户/年&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  (function () &#123;
+    /* 下拉选择框 */
+    var _selects = document.querySelectorAll(&quot;#qy-select&quot;);
+    _selects.forEach((_select, index) =&gt; &#123;
+      var selectHead = _select.getElementsByClassName(&quot;select-head&quot;)[0];
+      var selectHeadCont = _select.getElementsByClassName(&quot;select-head-cont&quot;);
+      var Option = _select.getElementsByClassName(&quot;option&quot;)[0];
+      var optionItem = _select.querySelectorAll(&quot;.option-item&quot;);
+      console.log(optionItem);
+      //   默认选中
+      optionItem.forEach((item, index) =&gt; &#123;
+        if (item.getAttribute(&quot;default&quot;)) &#123;
+          selectHeadCont[0].innerHTML = item.innerHTML;
+          selectHeadCont[0].setAttribute(&quot;value&quot;, item.getAttribute(&quot;value&quot;));
+        &#125;
+      &#125;);
+      /*出现下拉框*/
+      _select.addEventListener(
+        &quot;mouseenter&quot;,
+        function () &#123;
+          Option.style.display = &quot;block&quot;;
+        &#125;,
+        false
+      );
+      /*消失下拉框*/
+      _select.addEventListener(
+        &quot;mouseleave&quot;,
+        function () &#123;
+          Option.style.display = &quot;none&quot;;
+        &#125;,
+        false
+      );
+      /*点击选项后消失下拉框*/
+      var len = optionItem.length;
+      for (var i = 0; i &lt; len; i++) &#123;
+        optionItem[i].index = i;
+        optionItem[i].addEventListener(
+          &quot;click&quot;,
+          function () &#123;
+            selectHeadCont[0].innerHTML = optionItem[this.index].innerHTML;
+            selectHeadCont[0].setAttribute(
+              &quot;value&quot;,
+              optionItem[this.index].getAttribute(&quot;value&quot;)
+            );
+            Option.style.display = &quot;none&quot;;
+          &#125;,
+          false
+        );
+      &#125;
+    &#125;);
+  &#125;)();
+&lt;/script&gt;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B8%8B%E6%8B%89%E9%80%89%E6%8B%A9/" data-id="clcr94n6d000qtl0k37mm6fp3" data-title="原生js实现自定义样式的下拉选择" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-vue基于element封装pro-table (搜索、表格、分页能力)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/vue%E5%9F%BA%E4%BA%8Eelement%E5%B0%81%E8%A3%85pro-table%20(%E6%90%9C%E7%B4%A2%E3%80%81%E8%A1%A8%E6%A0%BC%E3%80%81%E5%88%86%E9%A1%B5%E8%83%BD%E5%8A%9B)/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:46.066Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/11/vue%E5%9F%BA%E4%BA%8Eelement%E5%B0%81%E8%A3%85pro-table%20(%E6%90%9C%E7%B4%A2%E3%80%81%E8%A1%A8%E6%A0%BC%E3%80%81%E5%88%86%E9%A1%B5%E8%83%BD%E5%8A%9B)/">vue基于element封装pro-table (搜索、表格、分页能力)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <pre><code>&lt;template&gt;
+  &lt;div class=&quot;page-box&quot;&gt;
+    &lt;!-- 搜索选项 --&gt;
+    &lt;el-form
+      v-if=&quot;!!search&quot;
+      class=&quot;search&quot;
+      :model=&quot;searchModel&quot;
+      :inline=&quot;true&quot;
+      label-position=&quot;left&quot;
+      :label-width=&quot;search.labelWidth&quot;
+      ref=&quot;searchForm&quot;
+    &gt;
+      &lt;el-form-item
+        v-for=&quot;item in search.fields&quot;
+        :key=&quot;item.name&quot;
+        :label=&quot;item.label&quot;
+        :prop=&quot;item.name&quot;
+      &gt;
+        &lt;slot v-if=&quot;item.type === &#39;custom&#39;&quot; :name=&quot;item.slot&quot; /&gt;
+        &lt;el-select
+          v-else-if=&quot;item.type === &#39;select&#39;&quot;
+          v-model=&quot;searchModel[item.name]&quot;
+          :filterable=&quot;!!item.filterable&quot;
+          :multiple=&quot;!!item.multiple&quot;
+          clearable
+          :placeholder=&quot;`请选择$&#123;item.label&#125;`&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;
+          &lt;el-option
+            v-for=&quot;option of item.options&quot;
+            :key=&quot;option.value&quot;
+            :label=&quot;option.name&quot;
+            :value=&quot;option.value&quot;
+          &gt;&lt;/el-option&gt;
+        &lt;/el-select&gt;
+        &lt;el-radio-group
+          v-model=&quot;searchModel[item.name]&quot;
+          v-else-if=&quot;item.type === &#39;radio&#39;&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;
+          &lt;el-radio
+            v-for=&quot;option of item.options&quot;
+            :key=&quot;option.value&quot;
+            :label=&quot;option.value&quot;
+          &gt;&#123;&#123; option.name &#125;&#125;&lt;/el-radio&gt;
+        &lt;/el-radio-group&gt;
+        &lt;el-radio-group
+          v-model=&quot;searchModel[item.name]&quot;
+          v-else-if=&quot;item.type === &#39;radio-button&#39;&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;
+          &lt;el-radio-button
+            v-for=&quot;option of item.options&quot;
+            :key=&quot;option.value&quot;
+            :label=&quot;option.value&quot;
+          &gt;&#123;&#123; option.name &#125;&#125;&lt;/el-radio-button&gt;
+        &lt;/el-radio-group&gt;
+        &lt;el-checkbox-group
+          v-model=&quot;searchModel[item.name]&quot;
+          v-else-if=&quot;item.type === &#39;checkbox&#39;&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;
+          &lt;el-checkbox
+            v-for=&quot;option of item.options&quot;
+            :key=&quot;option.value&quot;
+            :label=&quot;option.value&quot;
+          &gt;&#123;&#123; option.name &#125;&#125;&lt;/el-checkbox&gt;
+        &lt;/el-checkbox-group&gt;
+        &lt;el-checkbox-group
+          v-model=&quot;searchModel[item.name]&quot;
+          v-else-if=&quot;item.type === &#39;checkbox-button&#39;&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;
+          &lt;el-checkbox-button
+            v-for=&quot;option of item.options&quot;
+            :key=&quot;option.value&quot;
+            :label=&quot;option.value&quot;
+          &gt;&#123;&#123; option.name &#125;&#125;&lt;/el-checkbox-button&gt;
+        &lt;/el-checkbox-group&gt;
+        &lt;el-date-picker
+          v-else-if=&quot;item.type === &#39;date&#39;&quot;
+          v-model=&quot;searchModel[item.name]&quot;
+          type=&quot;date&quot;
+          value-format=&quot;yyyy-MM-dd&quot;
+          :placeholder=&quot;`请选择$&#123;item.label&#125;`&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;&lt;/el-date-picker&gt;
+        &lt;el-date-picker
+          v-else-if=&quot;item.type === &#39;datetime&#39;&quot;
+          v-model=&quot;searchModel[item.name]&quot;
+          type=&quot;datetime&quot;
+          value-format=&quot;yyyy-MM-dd HH:mm:ss&quot;
+          clearable
+          :placeholder=&quot;`请选择$&#123;item.label&#125;`&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;&lt;/el-date-picker&gt;
+        &lt;el-date-picker
+          v-else-if=&quot;item.type === &#39;daterange&#39;&quot;
+          v-model=&quot;searchModel[item.name]&quot;
+          type=&quot;daterange&quot;
+          value-format=&quot;yyyy-MM-dd&quot;
+          range-separator=&quot;-&quot;
+          start-placeholder=&quot;开始日期&quot;
+          end-placeholder=&quot;结束日期&quot;
+          clearable
+          @change=&quot;handleDateChange($event, item)&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;&lt;/el-date-picker&gt;
+        &lt;el-date-picker
+          v-else-if=&quot;item.type === &#39;datetimerange&#39;&quot;
+          v-model=&quot;searchModel[item.name]&quot;
+          type=&quot;datetimerange&quot;
+          value-format=&quot;yyyy-MM-dd HH:mm:ss&quot;
+          range-separator=&quot;-&quot;
+          start-placeholder=&quot;开始时间&quot;
+          end-placeholder=&quot;结束时间&quot;
+          clearable
+          @change=&quot;handleDateChange($event, item)&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;&lt;/el-date-picker&gt;
+        &lt;el-input-number
+          v-else-if=&quot;item.type === &#39;number&#39;&quot;
+          v-model=&quot;searchModel[item.name]&quot;
+          :placeholder=&quot;`请输入$&#123;item.label&#125;`&quot;
+          controls-position=&quot;right&quot;
+          :min=&quot;item.min&quot;
+          :max=&quot;item.max&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        /&gt;
+        &lt;el-input
+          v-else-if=&quot;item.type === &#39;textarea&#39;&quot;
+          type=&quot;textarea&quot;
+          v-model=&quot;searchModel[item.name]&quot;
+          clearable
+          :placeholder=&quot;`请输入$&#123;item.label&#125;`&quot;
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;&lt;/el-input&gt;
+        &lt;el-input
+          v-else
+          v-model=&quot;searchModel[item.name]&quot;
+          :placeholder=&quot;`请输入$&#123;item.label&#125;`&quot;
+          clearable
+          :style=&quot;&#123; width: search.inputWidth, ...item.style &#125;&quot;
+        &gt;&lt;/el-input&gt;
+      &lt;/el-form-item&gt;
+      &lt;el-form-item class=&quot;search-btn&quot;&gt;
+        &lt;el-button type=&quot;primary&quot; icon=&quot;el-icon-search&quot; @click=&quot;handleSearch&quot;&gt;查询&lt;/el-button&gt;
+        &lt;el-button @click=&quot;handleReset&quot; icon=&quot;el-icon-refresh-right&quot;&gt;重置&lt;/el-button&gt;
+      &lt;/el-form-item&gt;
+    &lt;/el-form&gt;
+
+    &lt;!-- title 和 工具栏 --&gt;
+    &lt;div class=&quot;head&quot; v-if=&quot;!hideTitleBar&quot;&gt;
+      &lt;slot name=&quot;title&quot;&gt;
+        &lt;span class=&quot;title&quot;&gt;&#123;&#123; title &#125;&#125;&lt;/span&gt;
+      &lt;/slot&gt;
+      &lt;div class=&quot;toolbar&quot;&gt;
+        &lt;slot name=&quot;toolbar&quot;&gt;&lt;/slot&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- table表格栏 --&gt;
+    &lt;div class=&quot;table&quot;&gt;
+      &lt;el-table
+        v-loading=&quot;loading&quot;
+        :data=&quot;tableData&quot;
+        :row-key=&quot;rowKey&quot;
+        :tree-props=&quot;tree.treeProps&quot;
+        :lazy=&quot;tree.lazy&quot;
+        :load=&quot;tree.load&quot;
+        tooltip-effect=&quot;dark&quot;
+        stripe
+        :border=&quot;border&quot;
+        @selection-change=&quot;handleSelectionChange&quot;
+        @row-click=&quot;handlerRowClick&quot;
+        ref=&quot;table&quot;
+      &gt;
+        &lt;el-table-column
+          v-for=&quot;item in columns&quot;
+          :key=&quot;item.label&quot;
+          :filter-method=&quot;item.filters &amp;&amp; filterHandler&quot;
+          :show-overflow-tooltip=&quot;!item.wrap&quot;
+          v-bind=&quot;item&quot;
+        &gt;
+          &lt;template #header=&quot;scope&quot; v-if=&quot;!!item.labelSlot&quot;&gt;
+            &lt;slot :name=&quot;item.labelSlot&quot; v-bind=&quot;scope&quot;&gt;&lt;/slot&gt;
+          &lt;/template&gt;
+          &lt;template #default=&quot;scope&quot; v-if=&quot;!!item.tdSlot&quot;&gt;
+            &lt;slot :name=&quot;item.tdSlot&quot; v-bind=&quot;scope&quot;&gt;&lt;/slot&gt;
+          &lt;/template&gt;
+        &lt;/el-table-column&gt;
+      &lt;/el-table&gt;
+    &lt;/div&gt;
+    &lt;!-- 分页 --&gt;
+    &lt;el-pagination
+      v-if=&quot;paginationConfig.show &amp;&amp; total &gt; 0&quot;
+      class=&quot;pagination&quot;
+      :style=&quot;paginationConfig.style&quot;
+      @size-change=&quot;handleSizeChange&quot;
+      :current-page.sync=&quot;pageNum&quot;
+      @current-change=&quot;handleCurrentChange&quot;
+      :page-sizes=&quot;paginationConfig.pageSizes&quot;
+      :page-size.sync=&quot;pageSize&quot;
+      :layout=&quot;paginationConfig.layout&quot;
+      :total=&quot;total&quot;
+    &gt;&lt;/el-pagination&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+  &lt;script&gt;
+const getSearchModel = (search) =&gt; &#123;
+  const searchModel = &#123;&#125;;
+  if (search &amp;&amp; search.fields) &#123;
+    search.fields.forEach((item) =&gt; &#123;
+      switch (item.type) &#123;
+        case &#39;checkbox&#39;:
+        case &#39;checkbox-button&#39;:
+          searchModel[item.name] = [];
+          break;
+        default:
+          break;
+      &#125;
+      if (item.defaultValue !== undefined) &#123;
+        searchModel[item.name] = item.defaultValue;
+        // 日期范围和时间范围真实变量默认值
+        if ((item.type === &#39;daterange&#39; || item.type === &#39;datetimerange&#39;) &amp;&amp; !!item.trueNames &amp;&amp; Array.isArray(item.defaultValue)) &#123;
+          item.defaultValue.forEach((val, index) =&gt; &#123;
+            searchModel[item.trueNames[index]] = val;
+          &#125;);
+        &#125;
+      &#125;
+    &#125;);
+  &#125;
+  return searchModel;
+&#125;;
+export default &#123;
+  components: &#123;&#125;,
+  props: &#123;
+    // 请求数据的方法
+    // eslint-disable-next-line vue/require-default-prop
+    request: &#123;
+      type: Function,
+    &#125;,
+    // 表格标题
+    title: &#123;
+      type: String,
+      default: &#39;&#39;,
+    &#125;,
+    // 是否隐藏标题栏
+    hideTitleBar: &#123;
+      type: Boolean,
+      default: false,
+    &#125;,
+    // 搜索表单配置，false表示不显示搜索表单
+    search: &#123;
+      type: [Boolean, Object],
+      default: false,
+    &#125;,
+    border: &#123;
+      type: Boolean,
+      default: false,
+    &#125;,
+    // 表头配置
+    columns: &#123;
+      type: Array,
+      default: function (params) &#123;
+        return [];
+      &#125;,
+    &#125;,
+    // 行数据的Key，同elementUI的table组件的row-key
+    rowKey: &#123;
+      type: String,
+      default: &#39;id&#39;,
+    &#125;,
+    // 分页配置，false表示不显示分页
+    pagination: &#123;
+      type: [Boolean, Object],
+      default: () =&gt; (&#123;&#125;),
+    &#125;,
+    tree: &#123;
+      type: Object,
+      default: () =&gt; (&#123;&#125;),
+    &#125;,
+  &#125;,
+  data() &#123;
+    let paginationConfig = &#123;
+      show: false,
+    &#125;;
+    if (typeof this.pagination === &#39;object&#39;) &#123;
+      const &#123; layout, pageSizes, style &#125; = this.pagination;
+      paginationConfig = &#123;
+        show: true,
+        layout: layout || &#39;total, sizes, prev, pager, next, jumper&#39;,
+        pageSizes: pageSizes || [10, 20, 30, 40, 50, 100],
+        style: style || &#123;&#125;,
+      &#125;;
+    &#125;
+
+    return &#123;
+      searchModel: getSearchModel(this.search),
+      loading: false,
+      tableData: [],
+      total: 0,
+      pageNum: 1,
+      pageSize: (!!this.pagination &amp;&amp; this.pagination.pageSize) || 10,
+      paginationConfig,
+    &#125;;
+  &#125;,
+  created() &#123;
+    // 请求列表数据
+    this.getTableData();
+  &#125;,
+  methods: &#123;
+    // 请求列表数据
+    async getTableData() &#123;
+      this.loading = true;
+      const searchModel = this.optimizeFields(this.search);
+      const &#123; data, total &#125; = await this.request(&#123;
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+        ...searchModel,
+      &#125;);
+      this.loading = false;
+      this.tableData = data;
+      this.total = total;
+    &#125;,
+    // 搜索
+    handleSearch() &#123;
+      this.pageNum = 1;
+      this.getTableData();
+    &#125;,
+    // 重置函数
+    handleReset() &#123;
+      if (JSON.stringify(this.searchModel) === &#39;&#123;&#125;&#39;) &#123;
+        return;
+      &#125;
+      this.pageNum = 1;
+      this.searchModel = getSearchModel(this.search);
+      this.getTableData();
+    &#125;,
+    // 刷新
+    refresh() &#123;
+      this.getTableData();
+    &#125;,
+    // 优化搜索字段，
+    // 1、如果搜索配置有transform处理函数，执行transform
+    // 2、删除日期范围默认的name字段
+    optimizeFields(search) &#123;
+      const searchModel = JSON.parse(JSON.stringify(this.searchModel));
+      if (search &amp;&amp; search.fields) &#123;
+        search.fields.forEach((item) =&gt; &#123;
+          if (!searchModel.hasOwnProperty(item.name)) &#123;
+            return;
+          &#125;
+          // eslint-disable-next-line no-extra-boolean-cast
+          if (!!item.transform) &#123;
+            searchModel[item.name] = item.transform(searchModel[item.name]);
+          &#125;
+          if ((item.type === &#39;daterange&#39; || item.type === &#39;datetimerange&#39;) &amp;&amp; !!item.trueNames) &#123;
+            delete searchModel[item.name];
+          &#125;
+        &#125;);
+      &#125;
+      return searchModel;
+    &#125;,
+    // 当前页变化
+    handleCurrentChange(page) &#123;
+      this.getTableData();
+    &#125;,
+    // 改变每页size数量
+    handleSizeChange(value) &#123;
+      this.pageNum = 1;
+      this.getTableData();
+    &#125;,
+
+    /* 行点击 */
+    handlerRowClick(e)&#123;
+        this.$emit(&#39;rowClick&#39;, e);
+    &#125;,
+    // 全选
+    handleSelectionChange(arr) &#123;
+      this.$emit(&#39;selectionChange&#39;, arr);
+    &#125;,
+    // 过滤方法
+    filterHandler(value, row, column) &#123;
+      const property = column[&#39;property&#39;];
+      return row[property] === value;
+    &#125;,
+    // 日期范围
+    handleDateChange(value, item) &#123;
+      if (!item.trueNames) &#123;
+        return;
+      &#125;
+
+      // eslint-disable-next-line no-extra-boolean-cast
+      if (!!value) &#123;
+        value.forEach((val, index) =&gt; &#123;
+          this.searchModel[item.trueNames[index]] = val;
+        &#125;);
+      &#125; else &#123;
+        item.trueNames.forEach((key) =&gt; &#123;
+          delete this.searchModel[key];
+        &#125;);
+      &#125;
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+  &lt;style lang=&quot;scss&quot; scoped&gt;
+.page-box &#123;
+  width: 100%;
+  box-sizing: border-box;
+  .search &#123;
+    padding: 20px 20px 0;
+    background: #fff;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    .el-form-item &#123;
+      margin-bottom: 20px;
+    &#125;
+    .search-btn &#123;
+      margin-left: auto;
+    &#125;
+    ::v-deep &#123;
+      .el-input-number .el-input__inner &#123;
+        text-align: left;
+      &#125;
+    &#125;
+  &#125;
+  .head &#123;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 0;
+    background: #fff;
+    .title &#123;
+      font-size: 16px;
+    &#125;
+  &#125;
+  .table &#123;
+    padding: 20px;
+    background: #fff;
+    ::v-deep th &#123;
+      background: #f6f6f6;
+      color: rgba(0, 0, 0, 0.85);
+    &#125;
+  &#125;
+  .pagination &#123;
+    padding: 0 20px 20px;
+    background: #fff;
+    text-align: right;
+    :last-child &#123;
+      margin-right: 0;
+    &#125;
+  &#125;
+&#125;
+&lt;/style&gt;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/vue%E5%9F%BA%E4%BA%8Eelement%E5%B0%81%E8%A3%85pro-table%20(%E6%90%9C%E7%B4%A2%E3%80%81%E8%A1%A8%E6%A0%BC%E3%80%81%E5%88%86%E9%A1%B5%E8%83%BD%E5%8A%9B)/" data-id="clcr94n6b000htl0kd7vpgvvh" data-title="vue基于element封装pro-table (搜索、表格、分页能力)" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-textarea多行邮箱格式校验" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/textarea%E5%A4%9A%E8%A1%8C%E9%82%AE%E7%AE%B1%E6%A0%BC%E5%BC%8F%E6%A0%A1%E9%AA%8C/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:44.742Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/11/textarea%E5%A4%9A%E8%A1%8C%E9%82%AE%E7%AE%B1%E6%A0%BC%E5%BC%8F%E6%A0%A1%E9%AA%8C/">textarea多行邮箱格式校验</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>效果<br><img src="https://img-blog.csdnimg.cn/cfdd54aca2bb4163bbf2b597e5296cbf.png" alt="在这里插入图片描述"><br>代码 vue element</p>
+<pre><code>const validMail = (rule, value, callback) =&gt; &#123;
+      if (!value) &#123;
+        callback(new Error(&#39;请输入邮箱&#39;));
+      &#125;
+      value = value.replace(/[\n]/g, &#39;,&#39;);
+      const reg = RegExp(/^(?=.*\.)(?=.*@).*$/);
+      if (!value.includes(&#39;,&#39;)) &#123;
+        if (!reg.test(value)) &#123;
+          callback(new Error(&#39;邮箱格式错误&#39;));
+        &#125; else &#123;
+          callback();
+        &#125;
+      &#125; else &#123;
+        let flag = -1;
+        value.split(&#39;,&#39;).map((mail, index) =&gt; &#123;
+          if (mail &amp;&amp; !reg.test(mail)) &#123;
+            flag = index;
+          &#125;
+        &#125;);
+        if (flag !== -1) &#123;
+          callback(new Error(`第$&#123;flag + 1&#125;行邮箱格式错误`));
+        &#125; else &#123;
+          callback();
+        &#125;
+      &#125;
+    &#125;;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/textarea%E5%A4%9A%E8%A1%8C%E9%82%AE%E7%AE%B1%E6%A0%BC%E5%BC%8F%E6%A0%A1%E9%AA%8C/" data-id="clcr94n6b000gtl0k0yy75s24" data-title="textarea多行邮箱格式校验" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-brew换源" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/brew%E6%8D%A2%E6%BA%90/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:43.880Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/11/brew%E6%8D%A2%E6%BA%90/">brew换源</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="查看-brew-git-当前源"><a href="#查看-brew-git-当前源" class="headerlink" title="查看 brew.git 当前源"></a>查看 brew.git 当前源</h1><p>$ cd “$(brew –repo)” &amp;&amp; git remote -v<br>origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/brew.git">https://github.com/Homebrew/brew.git</a> (fetch)<br>origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/brew.git">https://github.com/Homebrew/brew.git</a> (push)</p>
+<h1 id="查看-homebrew-core-git-当前源"><a href="#查看-homebrew-core-git-当前源" class="headerlink" title="查看 homebrew-core.git 当前源"></a>查看 homebrew-core.git 当前源</h1><p>$ cd “$(brew –repo homebrew&#x2F;core)” &amp;&amp; git remote -v<br>origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/homebrew-core.git">https://github.com/Homebrew/homebrew-core.git</a> (fetch)<br>origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/homebrew-core.git">https://github.com/Homebrew/homebrew-core.git</a> (push)</p>
+<h1 id="修改-brew-git-为阿里源"><a href="#修改-brew-git-为阿里源" class="headerlink" title="修改 brew.git 为阿里源"></a>修改 brew.git 为阿里源</h1><p>$ git -C “$(brew –repo)” remote set-url origin<br><a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/homebrew/brew.git">https://mirrors.aliyun.com/homebrew/brew.git</a></p>
+<h1 id="修改-homebrew-core-git-为阿里源"><a href="#修改-homebrew-core-git-为阿里源" class="headerlink" title="修改 homebrew-core.git 为阿里源"></a>修改 homebrew-core.git 为阿里源</h1><p>$ git -C “$(brew –repo homebrew&#x2F;core)” remote set-url origin<br><a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/homebrew/homebrew-core.git">https://mirrors.aliyun.com/homebrew/homebrew-core.git</a></p>
+<h1 id="zsh-替换-brew-bintray-镜像"><a href="#zsh-替换-brew-bintray-镜像" class="headerlink" title="zsh 替换 brew bintray 镜像"></a>zsh 替换 brew bintray 镜像</h1><p>$ echo ‘export<br>HOMEBREW_BOTTLE_DOMAIN&#x3D;<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/homebrew/homebrew-bottles%E2%80%99">https://mirrors.aliyun.com/homebrew/homebrew-bottles’</a></p>
+<blockquote>
+<blockquote>
+<p>~&#x2F;.zshrc<br>$ source ~&#x2F;.zshrc</p>
+</blockquote>
+</blockquote>
+<h1 id="bash-替换-brew-bintray-镜像"><a href="#bash-替换-brew-bintray-镜像" class="headerlink" title="bash 替换 brew bintray 镜像"></a>bash 替换 brew bintray 镜像</h1><p>$ echo ‘export<br>HOMEBREW_BOTTLE_DOMAIN&#x3D;<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/homebrew/homebrew-bottles%E2%80%99">https://mirrors.aliyun.com/homebrew/homebrew-bottles’</a></p>
+<blockquote>
+<blockquote>
+<p>~&#x2F;.bash_profile<br>$ source ~&#x2F;.bash_profile</p>
+</blockquote>
+</blockquote>
+<h1 id="刷新源"><a href="#刷新源" class="headerlink" title="刷新源"></a>刷新源</h1><p>$ brew update</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/brew%E6%8D%A2%E6%BA%90/" data-id="clcr94n670002tl0k5q9xf9z4" data-title="brew换源" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-craco打包优化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/craco%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:43.123Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/11/craco%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/">craco打包优化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本质还是webpack</p>
+<h2 id="1-查看包体积"><a href="#1-查看包体积" class="headerlink" title="1.查看包体积"></a>1.查看包体积</h2><p>使用webpack-bundle-analyzer进行分析</p>
+<pre><code>const &#123; BundleAnalyzerPlugin &#125; = require(&#39;webpack-bundle-analyzer&#39;); 
+ new BundleAnalyzerPlugin(&#123;
+        analyzerMode: &#39;server&#39;,
+        analyzerHost: &#39;127.0.0.1&#39;,
+        analyzerPort: 8888,
+        openAnalyzer: true, // 构建完打开浏览器
+        reportFilename: path.resolve(__dirname, `analyzer/index.html`), 
+    &#125;),
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/f565c3a86ea547d89e04b8a391e3fa41.png" alt="在这里插入图片描述"></p>
+<h2 id="2-使用splitChunks拆分代码"><a href="#2-使用splitChunks拆分代码" class="headerlink" title="2 使用splitChunks拆分代码"></a>2 使用splitChunks拆分代码</h2><pre><code>plugins:[],
+configure: (webpackConfig, &#123; env: webpackEnv, paths &#125;) =&gt; &#123;
+            webpackConfig.optimization.splitChunks = &#123;
+                ...webpackConfig.optimization.splitChunks,
+                cacheGroups: &#123;
+                    base: &#123;
+                        // 基本框架
+                        chunks: &#39;all&#39;,
+                        test: /(react|react-dom|react-dom-router|axios)/,
+                        name: &#39;base&#39;,
+                        priority: 100,
+                    &#125;,
+                    moment: &#123;
+                        test: /[\\/]node_modules[\\/]moment[\\/]/,
+                        name: &#39;moment&#39;,
+                        priority: 90,
+                    &#125;,
+                    // echarts: &#123;
+                    //     test: /(echarts)/,
+                    //     name: &#39;echarts&#39;,
+                    //     priority: 100,
+                    // &#125;,
+                    commons: &#123;
+                        chunks: &#39;all&#39;,
+                        // 将两个以上的chunk所共享的模块打包至commons组。
+                        minChunks: 2,
+                        name: &#39;commons&#39;,
+                        priority: 80,
+                    &#125;,
+                &#125;,
+            &#125;;
+            return webpackConfig;
+        &#125;
+</code></pre>
+<h2 id="3-使用babel-plugin-import按需引入"><a href="#3-使用babel-plugin-import按需引入" class="headerlink" title="3.使用babel-plugin-import按需引入"></a>3.使用babel-plugin-import按需引入</h2><pre><code> babel: &#123;
+    plugins: [
+      // 配置 babel-plugin-import ant按需加载
+      [
+        &#39;import&#39;,
+        &#123;
+          libraryName: &#39;antd&#39;,
+          libraryDirectory: &#39;es&#39;,
+          style: &#39;true&#39;,
+        &#125;,
+        &#39;antd&#39;,
+      ],
+      [
+        &#39;import&#39;,
+        &#123;
+          libraryName: &#39;moment&#39;,
+          libraryDirectory: &#39;es&#39;,
+          style: &#39;true&#39;,
+        &#125;,
+        &#39;moment&#39;,
+      ],
+    ],
+</code></pre>
+<h2 id="使用图片懒加载-LazyLoadImage"><a href="#使用图片懒加载-LazyLoadImage" class="headerlink" title="使用图片懒加载 LazyLoadImage"></a>使用图片懒加载 LazyLoadImage</h2><p>yarn add react-lazy-load-image-component</p>
+<h2 id="css异步加载"><a href="#css异步加载" class="headerlink" title="css异步加载"></a>css异步加载</h2><p>css文件的加载是会block网站渲染的 因此我们可以把css异步加载 具体方法</p>
+<pre><code>&lt;link href=&quot;73131f5.css&quot; rel=&quot;stylesheet&quot; media=&quot;jscourse&quot; onload=&quot;this.media=&#39;all&#39;&quot; /&gt;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/craco%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/" data-id="clcr94n680004tl0kgpuddrd3" data-title="craco打包优化" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-zsh报错 Insecure completion-dependent directories detected" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/zsh%E6%8A%A5%E9%94%99%20Insecure%20completion-dependent%20directories%20detected/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:42.078Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/11/zsh%E6%8A%A5%E9%94%99%20Insecure%20completion-dependent%20directories%20detected/">zsh报错 Insecure completion-dependent directories detected</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>错误：Insecure completion-dependent directories detected<br>在vi ~&#x2F;.zshrc头部添加 ZSH_DISABLE_COMPFIX&#x3D;true 没用的情况下<br>解决方法<br>终端输入</p>
+<pre><code>compaudit | xargs chmod g-w,o-w /home/用户名称/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/825aab4e031640c39492835bf3d7ee20.png" alt="在这里插入图片描述"><br>解决</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/zsh%E6%8A%A5%E9%94%99%20Insecure%20completion-dependent%20directories%20detected/" data-id="clcr94n6d000ntl0k9rigajrs" data-title="zsh报错 Insecure completion-dependent directories detected" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/11/%E7%89%A9%E7%90%86%E6%9C%BA%E5%AE%89%E8%A3%85Ubuntu/">物理机安装Ubuntu</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/Enter%20passphrase%20for%20key(%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD)/">Enter passphrase for key(输入密码短语)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/mac%E7%94%B5%E8%84%91git%20clone%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90/">mac电脑git clone提示没有权限</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/echarts%E5%8F%AF%E6%8B%96%E6%8B%BD%E6%9F%B1%E5%BD%A2%E5%9B%BE/">echarts可拖拽柱形图</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/nginx%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%8F%8A%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F/">nginx基础使用及代理跨域</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

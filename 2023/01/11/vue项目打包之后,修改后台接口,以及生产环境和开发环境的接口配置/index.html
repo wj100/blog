@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>vue项目打包之后,修改后台接口,以及生产环境和开发环境的接口配置 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="场景:在公司开发时用的是后台搭建的服务器,但是拿到外面部署时用的是真实服务器,不想每次改一次ip就打包一次,而且去部署时也不一定提前知道对方的ip…无法现场打包 首先我们配置开发环境与生产环境接口地址,congif &gt; dev.env.js：开发环境congif &gt; prod.env.js：正式（生产）环境 这里的window.g.ApiUrl后面再讲,这里可以写成真实服务器ip &amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue项目打包之后,修改后台接口,以及生产环境和开发环境的接口配置">
+<meta property="og:url" content="http://example.com/2023/01/11/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%B9%8B%E5%90%8E,%E4%BF%AE%E6%94%B9%E5%90%8E%E5%8F%B0%E6%8E%A5%E5%8F%A3,%E4%BB%A5%E5%8F%8A%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%92%8C%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E6%8E%A5%E5%8F%A3%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="场景:在公司开发时用的是后台搭建的服务器,但是拿到外面部署时用的是真实服务器,不想每次改一次ip就打包一次,而且去部署时也不一定提前知道对方的ip…无法现场打包 首先我们配置开发环境与生产环境接口地址,congif &gt; dev.env.js：开发环境congif &gt; prod.env.js：正式（生产）环境 这里的window.g.ApiUrl后面再讲,这里可以写成真实服务器ip &amp;#">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190830161254420.png">
+<meta property="article:published_time" content="2023-01-11T05:59:01.893Z">
+<meta property="article:modified_time" content="2023-01-11T05:59:01.894Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190830161254420.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-vue项目打包之后,修改后台接口,以及生产环境和开发环境的接口配置" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%B9%8B%E5%90%8E,%E4%BF%AE%E6%94%B9%E5%90%8E%E5%8F%B0%E6%8E%A5%E5%8F%A3,%E4%BB%A5%E5%8F%8A%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%92%8C%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E6%8E%A5%E5%8F%A3%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:59:01.893Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      vue项目打包之后,修改后台接口,以及生产环境和开发环境的接口配置
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>场景:在公司开发时用的是后台搭建的服务器,但是拿到外面部署时用的是真实服务器,不想每次改一次ip就打包一次,而且去部署时也不一定提前知道对方的ip…无法现场打包</p>
+<p><strong>首先我们配置开发环境与生产环境接口地址,</strong><br>congif &gt; dev.env.js：开发环境<br>congif &gt; prod.env.js：正式（生产）环境</p>
+<pre><code>这里的window.g.ApiUrl后面再讲,这里可以写成真实服务器ip
+&#39;use strict&#39;
+module.exports = &#123;
+  NODE_ENV: &#39;&quot;production&quot;&#39;,
+  //生产环境的url
+  API_ROOT: &#39;window.g.ApiUrl&#39;
+&#125;
+
+
+
+
+&#39;use strict&#39;
+const merge = require(&#39;webpack-merge&#39;)
+const prodEnv = require(&#39;./prod.env&#39;)
+
+module.exports = merge(prodEnv, &#123;
+  NODE_ENV: &#39;&quot;development&quot;&#39;,
+  //开发环境的url
+  API_ROOT: &#39;&quot;http://192.168.2.32:8081/data-store&quot;&#39;
+&#125;)
+</code></pre>
+<p>然后在用到这两个地址的时候使用 process.env.API_ROOT,<br>我这里是把地址存在vuex里面<br><img src="https://img-blog.csdnimg.cn/20190830161254420.png" alt="在这里插入图片描述"><br>这样一来,webpack就会自动区分环境,npm run dev时用开发地址,npm run build时用线上地址</p>
+<p>再说一下打包之后怎么修改配置,在任何地方部署都不需要重新打包<br>第一步:在项目的static文件夹下新建config.js,内容如下<br>目的是把地址存到window全局下</p>
+<pre><code>window.g = &#123;
+    AXIOS_TIMEOUT: 10000,
+    ApiUrl: &quot;http://192.168.2.32:8081/data-store&quot;, // 配置服务器地址,
+    ParentPage: &#123;
+        CrossDomainProxyUrl: &#39;/Home/CrossDomainProxy&#39;,
+        BtnsApi: &#39;/api/services/app/Authorization/GetBtns&#39;,
+        OrgsApi: &#39;/api/services/app/authorization/GetOrgsByUserId&#39;
+    &#125;
+&#125;
+</code></pre>
+<p>第二步：在index.html里面引入这个config.js<br>注意路径</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;./static/config.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>第三步:在任意处使用 window.g.ApiUrl 调用接口<br>我这里是在生产环境的ip配置里调用的</p>
+<pre><code>&#39;use strict&#39;
+module.exports = &#123;
+  NODE_ENV: &#39;&quot;production&quot;&#39;,
+  //生产环境的url
+  API_ROOT: &#39;window.g.ApiUrl&#39;
+&#125;
+</code></pre>
+<p>此方法能有效解决打包,接口配置等问题,亲测有效,不会把config.js也打包进去<br>另外网上还有一种办法使用generate-asset-webpack-plugin<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/377bfd2d9034">https://www.jianshu.com/p/377bfd2d9034</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41409679/article/details/84878642">https://blog.csdn.net/qq_41409679/article/details/84878642</a><br>尝试之后会有报错,可能是我操作不当</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%B9%8B%E5%90%8E,%E4%BF%AE%E6%94%B9%E5%90%8E%E5%8F%B0%E6%8E%A5%E5%8F%A3,%E4%BB%A5%E5%8F%8A%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%92%8C%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E6%8E%A5%E5%8F%A3%E9%85%8D%E7%BD%AE/" data-id="clcr94n6c000jtl0k5xsy099v" data-title="vue项目打包之后,修改后台接口,以及生产环境和开发环境的接口配置" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/01/11/myUtils.js-%E5%B7%A5%E4%BD%9C%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          myUtils.js-工作中常用的工具函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/11/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%B9%8B%E5%90%8E%E6%A0%B7%E5%BC%8F%E4%B8%8E%E6%9C%AC%E5%9C%B0%E4%B8%8D%E4%B8%80%E8%87%B4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">vue项目打包之后样式与本地不一致</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/11/%E7%89%A9%E7%90%86%E6%9C%BA%E5%AE%89%E8%A3%85Ubuntu/">物理机安装Ubuntu</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/Enter%20passphrase%20for%20key(%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD)/">Enter passphrase for key(输入密码短语)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/mac%E7%94%B5%E8%84%91git%20clone%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90/">mac电脑git clone提示没有权限</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/echarts%E5%8F%AF%E6%8B%96%E6%8B%BD%E6%9F%B1%E5%BD%A2%E5%9B%BE/">echarts可拖拽柱形图</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/nginx%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%8F%8A%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F/">nginx基础使用及代理跨域</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

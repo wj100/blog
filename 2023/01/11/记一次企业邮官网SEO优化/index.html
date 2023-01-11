@@ -4,19 +4,21 @@
   <meta charset="utf-8">
   
   
-  <title>Hello World | Hexo</title>
+  <title>记一次企业邮官网SEO优化 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="hello">
+  <meta name="description" content="背景：百度搜索 网易企业邮箱 会出现m.qiye.163.com 排名在前的问题 解决办法 在pc和m站分别加入 、mobileapplicable-device标注可以帮助百度识别网站是PC站还是M站，给百度提交提交校验识别结果的正确性，减少百度蜘蛛把PC站当成M站，或者把M站当成PC站进行抓取。  在百度站长平台做移动适配   js代码在pc和m站分别判断ua，跳转正确网页   if(is_p">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2023/01/11/hello-world/index.html">
+<meta property="og:title" content="记一次企业邮官网SEO优化">
+<meta property="og:url" content="http://example.com/2023/01/11/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BC%81%E4%B8%9A%E9%82%AE%E5%AE%98%E7%BD%91SEO%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="hello">
+<meta property="og:description" content="背景：百度搜索 网易企业邮箱 会出现m.qiye.163.com 排名在前的问题 解决办法 在pc和m站分别加入 、mobileapplicable-device标注可以帮助百度识别网站是PC站还是M站，给百度提交提交校验识别结果的正确性，减少百度蜘蛛把PC站当成M站，或者把M站当成PC站进行抓取。  在百度站长平台做移动适配   js代码在pc和m站分别判断ua，跳转正确网页   if(is_p">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-01-11T04:00:38.248Z">
-<meta property="article:modified_time" content="2023-01-11T05:44:55.081Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/028e4cdff00b4b0bba88bb60d68737f7.png">
+<meta property="article:published_time" content="2023-01-11T05:58:54.833Z">
+<meta property="article:modified_time" content="2023-01-11T05:58:54.833Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/028e4cdff00b4b0bba88bb60d68737f7.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -73,10 +75,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-记一次企业邮官网SEO优化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/01/11/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2023-01-11T04:00:38.248Z" itemprop="datePublished">2023-01-11</time>
+    <a href="/2023/01/11/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BC%81%E4%B8%9A%E9%82%AE%E5%AE%98%E7%BD%91SEO%E4%BC%98%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:54.833Z" itemprop="datePublished">2023-01-11</time>
 </a>
     
   </div>
@@ -87,7 +89,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Hello World
+      记一次企业邮官网SEO优化
     </h1>
   
 
@@ -95,12 +97,25 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>hello</p>
+        <h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><p>百度搜索 <em>网易企业邮箱</em> 会出现m.qiye.163.com 排名在前的问题</p>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><ol>
+<li><p>在pc和m站分别加入 、mobile<br>applicable-device标注可以帮助百度识别网站是PC站还是M站，给百度提交提交校验识别结果的正确性，减少百度蜘蛛把PC站当成M站，或者把M站当成PC站进行抓取。</p>
+</li>
+<li><p>在百度站长平台做移动适配 <img src="https://img-blog.csdnimg.cn/028e4cdff00b4b0bba88bb60d68737f7.png" alt="在这里插入图片描述"></p>
+</li>
+<li><p>js代码在pc和m站分别判断ua，跳转正确网页</p>
+</li>
+</ol>
+<pre><code>if(is_pc)&#123;
+    window.location.href = &#39;https://qiye.163.com&#39; + window.location.search;
+&#125;
+</code></pre>
+<p>推测出现此问题的原因是 我们只在pc站做了3的跳转逻辑 有可能被百度知道了<br>所以导致pc搜关键词直接出移动站</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/01/11/hello-world/" data-id="clcr94n690008tl0k8qvl23a3" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/01/11/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BC%81%E4%B8%9A%E9%82%AE%E5%AE%98%E7%BD%91SEO%E4%BC%98%E5%8C%96/" data-id="clcr94n6e000wtl0k9zns7zf1" data-title="记一次企业邮官网SEO优化" class="article-share-link">Share</a>
       
       
       
@@ -110,15 +125,20 @@
     
 <nav id="article-nav">
   
-    <a href="/2023/01/11/%E5%89%8D%E7%AB%AF%E5%8A%9D%E9%80%80%E5%B7%A5%E7%A8%8B%E5%B8%88/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2023/01/11/win10%E5%BC%80%E5%90%AFssh-agent/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          前端劝退工程师
+          win10开启ssh-agent
         
       </div>
     </a>
   
+  
+    <a href="/2023/01/11/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%95%B0%E7%BB%84%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%A0%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">【算法】数组转化为树</div>
+    </a>
   
 </nav>
 

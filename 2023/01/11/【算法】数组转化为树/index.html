@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>【算法】数组转化为树 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="递归let arr &#x3D; [     &amp;#123;id: 1, name: &#39;部门1&#39;, pid: 0&amp;#125;,     &amp;#123;id: 2, name: &#39;部门2&#39;, pid: 1&amp;#125;,     &amp;#123;id: 3, name: &#39;部门3&#39;, pid: 1&amp;#125;,     &amp;#123;id: 4, name: &#39;部门">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【算法】数组转化为树">
+<meta property="og:url" content="http://example.com/2023/01/11/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%95%B0%E7%BB%84%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%A0%91/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="递归let arr &#x3D; [     &amp;#123;id: 1, name: &#39;部门1&#39;, pid: 0&amp;#125;,     &amp;#123;id: 2, name: &#39;部门2&#39;, pid: 1&amp;#125;,     &amp;#123;id: 3, name: &#39;部门3&#39;, pid: 1&amp;#125;,     &amp;#123;id: 4, name: &#39;部门">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-11T05:58:54.056Z">
+<meta property="article:modified_time" content="2023-01-11T05:58:54.056Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-【算法】数组转化为树" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/11/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%95%B0%E7%BB%84%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%A0%91/" class="article-date">
+  <time class="dt-published" datetime="2023-01-11T05:58:54.056Z" itemprop="datePublished">2023-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      【算法】数组转化为树
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><pre><code>let arr = [
+    &#123;id: 1, name: &#39;部门1&#39;, pid: 0&#125;,
+    &#123;id: 2, name: &#39;部门2&#39;, pid: 1&#125;,
+    &#123;id: 3, name: &#39;部门3&#39;, pid: 1&#125;,
+    &#123;id: 4, name: &#39;部门4&#39;, pid: 3&#125;,
+    &#123;id: 5, name: &#39;部门5&#39;, pid: 4&#125;,
+]
+/**
+ * 递归查找，获取children
+ */
+const getChildren = (data, result, pid) =&gt; &#123;
+  for (const item of data) &#123;
+    if (item.pid === pid) &#123;
+      const newItem = &#123;...item, children: []&#125;;
+      result.push(newItem);
+      getChildren(data, newItem.children, item.id);
+    &#125;
+  &#125;
+&#125;
+
+/**
+* 转换方法
+*/
+const arrayToTree = (data, pid) =&gt; &#123;
+  const result = [];
+  getChildren(data, result, pid)
+  return result;
+&#125;
+
+arrayToTree (arr,0)
+</code></pre>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><pre><code>&lt;script&gt;
+let arr = [
+    &#123;id: 1, name: &#39;部门1&#39;, pid: 0&#125;,
+    &#123;id: 2, name: &#39;部门2&#39;, pid: 1&#125;,
+    &#123;id: 3, name: &#39;部门3&#39;, pid: 1&#125;,
+    &#123;id: 4, name: &#39;部门4&#39;, pid: 3&#125;,
+    &#123;id: 5, name: &#39;部门5&#39;, pid: 4&#125;,
+]
+function arrayToTree(items) &#123;
+    const result = [];   // 存放结果集
+    const itemMap = &#123;&#125;;  // 
+    // 先转成map存储
+    for (const item of items) &#123;
+      itemMap[item.id] = &#123;...item, children: []&#125;
+    &#125;
+    for (const item of items) &#123;
+      if (item.pid === 0) &#123;
+        result.push(itemMap[item.id]);
+      &#125; else &#123;
+        itemMap[item.pid].children.push(itemMap[item.id])
+        console.log(item.pid)
+      &#125;
+  
+    &#125;
+    return result;
+  &#125;
+
+  console.log(JSON.stringify(arrayToTree(arr)))
+&lt;/script&gt;
+</code></pre>
+<h3 id="最优"><a href="#最优" class="headerlink" title="最优"></a>最优</h3><pre><code>function arrayToTree(items) &#123;
+  const result = [];   // 存放结果集
+  const itemMap = &#123;&#125;;  // 
+  for (const item of items) &#123;
+    const id = item.id;
+    const pid = item.pid;
+
+    if (!itemMap[id]) &#123;
+      itemMap[id] = &#123;
+        children: [],
+      &#125;
+    &#125;
+
+    itemMap[id] = &#123;
+      ...item,
+      children: itemMap[id][&#39;children&#39;]
+    &#125;
+
+    const treeItem =  itemMap[id];
+
+    if (pid === 0) &#123;
+      result.push(treeItem);
+    &#125; else &#123;
+      if (!itemMap[pid]) &#123;
+        itemMap[pid] = &#123;
+          children: [],
+        &#125;
+      &#125;
+      itemMap[pid].children.push(treeItem)
+    &#125;
+
+  &#125;
+  return result;
+&#125;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/11/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%95%B0%E7%BB%84%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%A0%91/" data-id="clcr94n6d000otl0kb8gcb5z7" data-title="【算法】数组转化为树" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/01/11/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BC%81%E4%B8%9A%E9%82%AE%E5%AE%98%E7%BD%91SEO%E4%BC%98%E5%8C%96/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          记一次企业邮官网SEO优化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/11/mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mac开发环境搭建</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/11/%E7%89%A9%E7%90%86%E6%9C%BA%E5%AE%89%E8%A3%85Ubuntu/">物理机安装Ubuntu</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/Enter%20passphrase%20for%20key(%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD)/">Enter passphrase for key(输入密码短语)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/mac%E7%94%B5%E8%84%91git%20clone%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90/">mac电脑git clone提示没有权限</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/echarts%E5%8F%AF%E6%8B%96%E6%8B%BD%E6%9F%B1%E5%BD%A2%E5%9B%BE/">echarts可拖拽柱形图</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/11/nginx%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%8F%8A%E4%BB%A3%E7%90%86%E8%B7%A8%E5%9F%9F/">nginx基础使用及代理跨域</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
